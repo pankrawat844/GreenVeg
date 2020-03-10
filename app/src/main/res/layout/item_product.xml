@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:layout_margin="15dp"
+
+        android:background="#ffffff">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/light_gray_rect"
+            >
+
+
+
+
+            <ImageView
+                android:id="@+id/product_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/shoes3"/>
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/txtprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$120"
+                android:fontFamily="@font/sfuitext_regular"
+                android:textSize="14sp"
+                android:textColor="#ef4e33" />
+
+            <TextView
+                android:id="@+id/txtcutprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$100"
+                android:fontFamily="@font/sfuitext_regular"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ninja high top\nsneackers"
+            android:textSize="15sp"
+            android:fontFamily="@font/sfuitext_regular"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/add_to_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:text="ADD TO CART"
+            android:fontFamily="@font/sfuitext_regular"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:background="@drawable/rect1"/>
+        <TextView
+            android:id="@+id/buy_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="   BUY NOW   "
+            android:fontFamily="@font/sfuitext_regular"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:background="@drawable/rect1"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

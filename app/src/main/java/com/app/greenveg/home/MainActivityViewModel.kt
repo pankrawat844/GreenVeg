@@ -19,8 +19,8 @@ class MainActivityViewModel(val repository: Repository) : ViewModel()
                CoroutineScope(Dispatchers.IO).launch {
                      try {
 
-
-                         val response = repository.getCatList().enqueue(object :Callback<Category>{
+                    homeListener?.onStarted()
+                          repository.getCatList().enqueue(object :Callback<Category>{
                              override fun onFailure(call: Call<Category>, t: Throwable) {
 
                              }

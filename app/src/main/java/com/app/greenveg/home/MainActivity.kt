@@ -4,6 +4,7 @@ package com.app.greenveg.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TableLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -12,10 +13,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.app.greenveg.R
-import com.app.greenveg.fragment.ProductListFragment
+import com.app.greenveg.fragment.productlist.ProductListFragment
 import com.app.greenveg.model.Category
 import kotlinx.android.synthetic.main.activity_main.*
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity(),HomeListener,KodeinAware {
             MainActivityViewModel::class.java)
         viewmodel.homeListener=this
         viewmodel.getAllCategory()
-
 
     }
 
@@ -57,17 +56,29 @@ class MainActivity : AppCompatActivity(),HomeListener,KodeinAware {
        }
    }
 
+    override fun onStarted() {
+        mainProgress.visibility=View.VISIBLE
+    }
+
     override fun onSuccess(response: List<Category.Response>) {
+        mainProgress.visibility=View.GONE
         Log.e("TAG", "onSuccess: "+response.toString() )
         pagerAdapter= MyViewPagerAdapter(supportFragmentManager)
         for (i in response.iterator()) {
-            pagerAdapter?.addFragment(ProductListFragment(),i.categoryName!!)
+            val fragment=
+                ProductListFragment()
+            val bundle=Bundle()
+            bundle.putString("cat_id",i.cid)
+            bundle.putString("cat_name",i.categoryName)
+            fragment.arguments=bundle
+            pagerAdapter?.addFragment(fragment,i.categoryName!!)
         }
         viewpager1.adapter=pagerAdapter
         tablayout1.setupWithViewPager(viewpager1,true)
     }
 
     override fun onFailour(msg: String) {
+        mainProgress.visibility=View.GONE
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
