@@ -30,11 +30,11 @@
         </RelativeLayout>
         <TextView
             android:id="@+id/cart_item"
-            android:layout_width="26dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/relative_layout"
             android:background="@drawable/cart_bg"
-            android:text="0"
+            android:text="10"
             android:gravity="center"
             android:textColor="#FFF"
             android:textSize="16sp"

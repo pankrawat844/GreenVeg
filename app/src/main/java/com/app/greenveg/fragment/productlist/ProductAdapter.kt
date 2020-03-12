@@ -5,14 +5,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.db.ProductEntity
-import com.app.greenveg.home.MainActivity
 import com.app.greenveg.utils.Constants
-import com.app.greenveg.utils.toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_product.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -48,18 +45,21 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
         holder.cut_price.text = list[position].marketPrice
         holder.price.text = list[position].sellingPrice
         holder.addtocart.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 AppDatabase(context).cartDao().addToCart(list[position])
-                context.toast("$list[position].productName added to basket")
-              context.sendBroadcast(Intent("change_value"))
+//               context.toast("$list[position].productName added to basket")
+                context.sendBroadcast(Intent("change_value"))
 
             }
         }
         holder.buy_now.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 AppDatabase(context).cartDao().addToCart(list[position])
-               context.toast("$list[position].productName added to basket")
-                context.sendBroadcast(Intent("change_value"))
+//               context.toast("$list[position].productName added to basket")
+                val intent = Intent()
+                intent.action = "change_value"
+
+                context.sendBroadcast(intent)
 
             }
         }
