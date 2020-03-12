@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.greenveg.R
-import com.app.greenveg.model.ProductList
+import com.app.greenveg.db.ProductEntity
 import com.app.greenveg.utils.Constants
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_product.view.*
 
-class ProductAdapter(private val context:Context,private val list:List<ProductList.Response>):RecyclerView.Adapter<ProductAdapter.Viewholder>()  {
+class ProductAdapter(private val context: Context, private val list: List<ProductEntity>) :
+    RecyclerView.Adapter<ProductAdapter.Viewholder>() {
 
-    class Viewholder(view:View):RecyclerView.ViewHolder(view)
-    {
-        val product_name=view.product_name
-        val cut_price=view.txtcutprice
-        val price=view.txtprice
-        val product_img=view.product_img
+    class Viewholder(view: View) : RecyclerView.ViewHolder(view) {
+        val product_name = view.product_name
+        val cut_price = view.txtcutprice
+        val price = view.txtprice
+        val product_img = view.product_img
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
