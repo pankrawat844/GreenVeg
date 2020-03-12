@@ -35,14 +35,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
-            <TextView
-                android:id="@+id/txtprice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$120"
-                android:fontFamily="@font/sfuitext_regular"
-                android:textSize="14sp"
-                android:textColor="#ef4e33" />
+
 
             <TextView
                 android:id="@+id/txtcutprice"
@@ -51,6 +44,15 @@
                 android:text="$100"
                 android:fontFamily="@font/sfuitext_regular"
                 android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/txtprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$120"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/sfuitext_regular"
+                android:textSize="14sp"
+                android:textColor="#ef4e33" />
 
         </LinearLayout>
 
@@ -69,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="ADD TO CART"
+            android:text="ADD TO BASKET"
             android:fontFamily="@font/sfuitext_regular"
             android:textColor="#ffffff"
             android:textSize="12sp"
@@ -81,7 +83,7 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="   BUY NOW   "
+            android:text="     BUY NOW     "
             android:fontFamily="@font/sfuitext_regular"
             android:textColor="#ffffff"
             android:textSize="12sp"

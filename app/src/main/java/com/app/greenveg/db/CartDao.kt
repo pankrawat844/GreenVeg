@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface CartDao {
 
-    @Query("SELECT * FROM ProductEntity")
+    @Query("SELECT * FROM Product")
     fun getCartProduct(): List<ProductEntity>
 
     @Insert

@@ -1,21 +1,29 @@
 
 package com.app.greenveg.home
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TableLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProviders
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager.widget.ViewPager
 import com.app.greenveg.R
+import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.fragment.productlist.ProductListFragment
 import com.app.greenveg.model.Category
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar_home.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -25,9 +33,11 @@ class MainActivity : AppCompatActivity(),HomeListener,KodeinAware {
     lateinit var tabLayout:TableLayout
     val factory:HomeViewModelFactory by instance()
     var pagerAdapter:MyViewPagerAdapter?=null
+    var cartitem:TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        cartitem=cart_item
         var viewmodel: MainActivityViewModel =ViewModelProviders.of(this,factory).get(
             MainActivityViewModel::class.java)
         viewmodel.homeListener=this
@@ -83,4 +93,37 @@ class MainActivity : AppCompatActivity(),HomeListener,KodeinAware {
     }
 
     override val kodein by kodein()
+
+    companion object{
+        private lateinit var context: Context
+        fun  changeCartValue(con: Context){
+           val size= AppDatabase(con).cartDao().getCartProduct().size
+
+        }
+    }
+    val broadCastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(contxt: Context?, intent: Intent?) {
+
+            when (intent?.action) {
+                "change_value" -> {
+                    val size= AppDatabase(this@MainActivity).cartDao().getCartProduct().size
+                        cart_item.text= size.toString()
+                }
+
+
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(broadCastReceiver, IntentFilter("change_value"))
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(broadCastReceiver)
+    }
 }
