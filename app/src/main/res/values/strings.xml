@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Green Veg</string>
+    <string name="supra"><b>SUPRA WOOD</b></string>
+    <string name="price"><b>$ 114</b></string>
+    <string-array name="kg_array">
+        <item>250g</item>
+        <item>500g</item>
+        <item>750g</item>
+        <item>1kg</item>
+        <item>2kg</item>
+        <item>3kg</item>
+    </string-array>
+
+    <string-array name="kg_bundle">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
 </resources>

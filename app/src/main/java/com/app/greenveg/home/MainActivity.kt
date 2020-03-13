@@ -40,12 +40,18 @@ class MainActivity : AppCompatActivity(),HomeListener,KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        cartitem=cart_item
-        var viewmodel: MainActivityViewModel =ViewModelProviders.of(this,factory).get(
-            MainActivityViewModel::class.java)
-        viewmodel.homeListener=this
+        cartitem = cart_item
+        var viewmodel: MainActivityViewModel = ViewModelProviders.of(this, factory).get(
+            MainActivityViewModel::class.java
+        )
+        viewmodel.homeListener = this
         viewmodel.getAllCategory()
-
+        CoroutineScope(Dispatchers.IO).launch {
+            val size = AppDatabase(this@MainActivity).cartDao().getCartProduct().size
+            withContext(Dispatchers.Main) {
+                cart_item.text = size.toString()
+            }
+        }
     }
 
    class MyViewPagerAdapter(fm:FragmentManager):FragmentStatePagerAdapter(fm)

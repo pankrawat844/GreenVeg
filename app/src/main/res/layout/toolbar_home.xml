@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
             <Button
                 android:id="@+id/button1"
-                android:layout_width="65dip"
+                android:layout_width="45dip"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/green"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/relative_layout"
             android:background="@drawable/cart_bg"
-            android:text="10"
+            android:text="0"
             android:gravity="center"
             android:textColor="#FFF"
             android:textSize="16sp"

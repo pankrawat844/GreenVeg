@@ -3,6 +3,7 @@ package com.app.greenveg.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "Product")
 data class ProductEntity(
@@ -37,4 +38,4 @@ data class ProductEntity(
     val status: String?,
     @SerializedName("unit_of_measure")
     val unitOfMeasure: String?
-)
+) : Serializable
