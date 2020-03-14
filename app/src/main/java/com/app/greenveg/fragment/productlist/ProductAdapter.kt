@@ -26,6 +26,7 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
     class Viewholder(view: View) : RecyclerView.ViewHolder(view) {
         val product_name = view.product_name
         val cut_price = view.txtcutprice
+        val cut_price_txt = view.txtcutprice_txt
         val price = view.txtprice
         val product_img = view.product_img
         val addtocart = view.add_to_cart
@@ -47,11 +48,21 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
             .placeholder(R.drawable.loader).fit().into(holder.product_img)
         holder.product_name.text = list[position].productName
         if (list[position].marketPrice != "") {
+            holder.cut_price_txt.visibility = View.VISIBLE
             holder.cut_price.text = list[position].marketPrice
         }
-        holder.price.text = "Our Price: " + list[position].sellingPrice
+        holder.price.text = "Our Price: Rs" + list[position].sellingPrice
         holder.addtocart.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
+                val productList = AppDatabase(context).cartDao().getCartProduct()
+                for (i in productList.iterator()) {
+                    if (i.productId == list[position].productId) {
+                        withContext(Main) {
+                            context.toast("${list[position].productName} already added to basket.")
+                        }
+                        return@launch
+                    }
+                }
                 AppDatabase(context).cartDao().addToCart(list[position])
                 withContext(Main) {
                     context.toast("${list[position].productName} added to basket")
@@ -61,7 +72,18 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
             }
         }
         holder.buy_now.setOnClickListener {
+
             CoroutineScope(Dispatchers.IO).launch {
+
+                val productList = AppDatabase(context).cartDao().getCartProduct()
+                for (i in productList.iterator()) {
+                    if (i.productId == list[position].productId) {
+                        withContext(Main) {
+                            context.toast("${list[position].productName} already added to basket.")
+                        }
+                        return@launch
+                    }
+                }
                 AppDatabase(context).cartDao().addToCart(list[position])
 //               context.toast("$list[position].productName added to basket")
                 val intent = Intent()

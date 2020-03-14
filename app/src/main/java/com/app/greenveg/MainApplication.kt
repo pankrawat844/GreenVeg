@@ -6,6 +6,7 @@ import com.app.greenveg.fragment.productlist.ProductListViewModel
 import com.app.greenveg.home.HomeViewModelFactory
 import com.app.greenveg.home.MainActivityViewModel
 import com.app.greenveg.repo.Repository
+import com.app.greenveg.ui.home.HomeFragment
 import com.app.greenveg.utils.MyApi
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -29,6 +30,8 @@ class MainApplication:Application(),KodeinAware {
                 instance()
             )
         }
+
+        bind() from singleton { HomeFragment() }
     }
 
 }
