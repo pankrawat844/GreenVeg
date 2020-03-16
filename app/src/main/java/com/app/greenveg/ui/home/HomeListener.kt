@@ -1,4 +1,4 @@
-package com.app.greenveg.home
+package com.app.greenveg.ui.home
 
 import com.app.greenveg.model.Category
 

@@ -1,4 +1,4 @@
-package com.app.greenveg.fragment.productlist
+package com.app.greenveg.ui.productlist
 
 import androidx.lifecycle.ViewModel
 import com.app.greenveg.model.ProductList
@@ -29,10 +29,10 @@ fun getProductList(cat:Int){
                     response: Response<ProductList>
                 ) {
                     response.body()?.let {
-                        productLisetner?.onSuccess(it!!)
+                        productLisetner?.onSuccess(it)
                         return
                     }
-                      productLisetner?.onFailure(response?.body()?.message!!)
+                    productLisetner?.onFailure(response.body()?.message!!)
                 }
 
             })

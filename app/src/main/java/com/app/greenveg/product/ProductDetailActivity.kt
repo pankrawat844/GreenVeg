@@ -1,6 +1,7 @@
 package com.app.greenveg.product
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.SpinnerAdapter
@@ -12,7 +13,6 @@ import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.db.ProductEntity
 import com.app.greenveg.utils.toast
 import kotlinx.android.synthetic.main.activity_productl.*
-import kotlinx.android.synthetic.main.toolbar_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,34 +44,82 @@ class ProductDetailActivity : AppCompatActivity() {
         viewPager.adapter = viewPagerAdapter
 
         CoroutineScope(Dispatchers.IO).launch {
+
             val size = AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
             withContext(Dispatchers.Main) {
                 cart_item.text = size.toString()
             }
         }
 
+        back.setOnClickListener {
+            onBackPressed()
+        }
         addtobag.setOnClickListener {
 
             CoroutineScope(Dispatchers.IO).launch {
+                val productList = AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
+                for (i in productList.iterator()) {
+                    if (i.productId == data.productId) {
+                        withContext(Dispatchers.Main) {
+                            toast("${data.productName} already added to basket.")
+                        }
+                        return@launch
+                    }
+                }
                 AppDatabase(this@ProductDetailActivity).cartDao().addToCart(data)
                 val size = AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
                 withContext(Dispatchers.Main) {
                     cart_item.text = size.toString()
                     toast("${data.productName} added to basket")
-
+                    sendBroadcast(Intent("change_value"))
 
                 }
             }
         }
 
-        if (data.unitOfMeasure.equals("Kg")) {
+
+        buy_now.setOnClickListener {
+            addtobag.setOnClickListener {
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val productList =
+                        AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
+                    for (i in productList.iterator()) {
+                        if (i.productId == data.productId) {
+                            withContext(Dispatchers.Main) {
+                                toast("${data.productName} already added to basket.")
+                            }
+                            return@launch
+                        }
+                    }
+                    AppDatabase(this@ProductDetailActivity).cartDao().addToCart(data)
+                    val size =
+                        AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
+                    withContext(Dispatchers.Main) {
+                        cart_item.text = size.toString()
+                        toast("${data.productName} added to basket")
+                        sendBroadcast(Intent("change_value"))
+
+                    }
+                }
+            }
+        }
+        if (data.unitOfMeasure.equals("KG")) {
             val adapter =
-                ArrayAdapter<SpinnerAdapter>(this, R.layout.spinner_item, R.array.kg_array)
+                ArrayAdapter(
+                    this,
+                    R.layout.spinner_item,
+                    resources.getStringArray(R.array.kg_array)
+                )
             quantity.adapter = adapter
         } else {
 
             val adapter =
-                ArrayAdapter<SpinnerAdapter>(this, R.layout.spinner_item, R.array.kg_bundle)
+                ArrayAdapter(
+                    this,
+                    R.layout.spinner_item,
+                    resources.getStringArray(R.array.kg_bundle)
+                ) as SpinnerAdapter
             quantity.adapter = adapter
 
         }

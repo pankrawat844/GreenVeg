@@ -30,8 +30,7 @@ class NavigationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_navigation)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -50,6 +49,7 @@ class NavigationActivity : AppCompatActivity() {
                 cart_item.text = size.toString()
             }
         }
+
     }
 
 
@@ -91,6 +91,16 @@ class NavigationActivity : AppCompatActivity() {
         super.onStart()
 
         registerReceiver(broadCastReceiver, IntentFilter("change_value"))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CoroutineScope(Dispatchers.IO).launch {
+            val size = AppDatabase(this@NavigationActivity).cartDao().getCartProduct().size
+            withContext(Dispatchers.Main) {
+                cart_item.text = size.toString()
+            }
+        }
     }
 
     override fun onStop() {

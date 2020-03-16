@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,34 +14,95 @@
         android:layout_height="match_parent"
         android:background="#fff">
 
-        <ScrollView
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-
-            >
+            android:layout_height="wrap_content">
 
 
-            <RelativeLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
 
-                <include
-                    android:id="@+id/toolbar"
-                    layout="@layout/toolbar_home"></include>
+                    />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo" />
 
                 <RelativeLayout
-                    android:id="@+id/pic"
-                    android:layout_width="match_parent"
+                    android:id="@+id/badge_layout1"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/toolbar">
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="15dp">
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/viewPager"
+                    <RelativeLayout
+                        android:id="@+id/relative_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/button1"
+                            android:layout_width="35dip"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/ic_baseline_shopping_basket_24"
+                            android:backgroundTint="@color/green" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/cart_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/relative_layout"
+                        android:layout_marginRight="-5dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="0"
+                        android:textColor="#FFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/toolbar"
+                android:scrollbars="none">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:id="@+id/pic"
                         android:layout_width="match_parent"
-                        android:layout_height="190dp"
+                        android:layout_height="wrap_content">
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="190dp"
                         android:layout_marginBottom="8dp" />
 
                     <LinearLayout
@@ -67,8 +129,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="5dp"
                         android:text="@{data.productName}"
+                        android:fontFamily="@font/sfuitext_regular"
                         android:textColor="@color/text"
                         android:textSize="26dp" />
 
@@ -78,7 +141,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="156dp"
                         android:background="@color/colordevider" />
 
@@ -86,17 +149,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:text="@{data.sellingPrice}"
+                        productname="@{data}"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="0dp"
                         android:textColor="@color/text"
-                        android:textSize="24dp" />
+                        android:fontFamily="@font/sfuitext_regular"
+                        android:textSize="20dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="5dp"
                         android:text="Product Detail"
                         android:textColor="@color/text"
                         android:textSize="16dp" />
@@ -105,10 +169,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:lineSpacingExtra="5dp"
                         android:text="@{data.productDesc}"
                         android:textColor="@color/subtext"
+                        android:fontFamily="@font/sfuitext_regular"
                         android:textSize="14dp" />
                 </LinearLayout>
 
@@ -118,11 +183,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/linear1"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -131,26 +196,29 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="30dp"
+                            android:layout_gravity="center"
                             android:layout_weight="1">
 
                             <TextView
                                 android:id="@+id/spinner1"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:spinnerMode="dropdown"
-                                android:text="Quantity" />
+                                android:gravity="center"
+                                android:text="Select Order Quantity" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="100dp"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:layout_marginRight="10dp"
                             android:background="@drawable/border">
 
                             <Spinner
                                 android:id="@+id/quantity"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:entries="@array/kg_array"
                                 android:spinnerMode="dropdown" />
@@ -167,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/spinnerlinear"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/rect2">
 
@@ -179,7 +247,7 @@
                         android:padding="10dp"
                         android:text="ADD  TO  BASKET"
                         android:textColor="#fff"
-                        android:textSize="17dp" />
+                        android:textSize="15dp" />
 
                 </LinearLayout>
 
@@ -202,12 +270,12 @@
                         android:padding="10dp"
                         android:text="BUY NOW"
                         android:textColor="#fff"
-                        android:textSize="17dp" />
+                        android:textSize="15dp" />
 
                 </LinearLayout>
+                </RelativeLayout>
+            </ScrollView>
 
-
-            </RelativeLayout>
-        </ScrollView>
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

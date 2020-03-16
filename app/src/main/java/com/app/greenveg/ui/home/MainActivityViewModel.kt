@@ -1,4 +1,4 @@
-package com.app.greenveg.home
+package com.app.greenveg.ui.home
 
 import androidx.lifecycle.ViewModel
 import com.app.greenveg.model.Category
@@ -14,7 +14,7 @@ import retrofit2.Response
 
 class MainActivityViewModel(val repository: Repository) : ViewModel()
 {
-        var homeListener:HomeListener?=null
+    var homeListener: HomeListener? = null
         fun getAllCategory(){
                CoroutineScope(Dispatchers.IO).launch {
                      try {
@@ -33,7 +33,7 @@ class MainActivityViewModel(val repository: Repository) : ViewModel()
                                      homeListener?.onSuccess(it!!)
                                      return
                                  }
-                                 homeListener?.onFailour(response?.body()?.message!!)
+                                 homeListener?.onFailour(response.body()?.message!!)
                              }
 
                          })

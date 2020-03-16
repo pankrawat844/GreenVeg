@@ -1,4 +1,4 @@
-package com.app.greenveg.fragment.productlist
+package com.app.greenveg.ui.productlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

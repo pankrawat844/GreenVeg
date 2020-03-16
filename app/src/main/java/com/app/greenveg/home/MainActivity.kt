@@ -14,8 +14,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
-import com.app.greenveg.fragment.productlist.ProductListFragment
 import com.app.greenveg.model.Category
+import com.app.greenveg.ui.home.HomeListener
+import com.app.greenveg.ui.home.HomeViewModelFactory
+import com.app.greenveg.ui.home.MainActivityViewModel
+import com.app.greenveg.ui.productlist.ProductListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_home.*
 import kotlinx.coroutines.CoroutineScope
@@ -26,11 +29,11 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class MainActivity : AppCompatActivity(),HomeListener,KodeinAware {
+class MainActivity : AppCompatActivity(), HomeListener, KodeinAware {
     lateinit var viewPager: ViewPager
-    lateinit var tabLayout:TableLayout
-    val factory:HomeViewModelFactory by instance()
-    var pagerAdapter:MyViewPagerAdapter?=null
+    lateinit var tabLayout: TableLayout
+    val factory: HomeViewModelFactory by instance()
+    var pagerAdapter: MyViewPagerAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

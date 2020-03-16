@@ -1,8 +1,7 @@
-package com.app.greenveg.home
+package com.app.greenveg.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.app.greenveg.repo.Repository
 
 class HomeViewModelFactory(val repository: Repository) :ViewModelProvider.NewInstanceFactory(){

@@ -5,17 +5,18 @@ import com.app.greenveg.model.Category
 import com.app.greenveg.model.ProductList
 import com.app.greenveg.utils.MyApi
 import retrofit2.Call
-import retrofit2.Response
 
 class Repository(val myApi: MyApi):SafeApiRequest() {
 
-    suspend fun getCatList():Call<Category>
-    {
+    suspend fun getCatList(): Call<Category> {
         return myApi.getAllCat()
     }
 
-    suspend fun getProductList(cat:Int):Call<ProductList>
-    {
+    suspend fun getProductList(cat: Int): Call<ProductList> {
         return myApi.getProductList(cat)
+    }
+
+    suspend fun getSearchProductList(search: String): Call<ProductList> {
+        return myApi.getSearchProductList(search)
     }
 }

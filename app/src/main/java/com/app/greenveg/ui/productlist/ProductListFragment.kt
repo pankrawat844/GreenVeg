@@ -1,15 +1,16 @@
-package com.app.greenveg.fragment.productlist
+package com.app.greenveg.ui.productlist
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.greenveg.R
 import com.app.greenveg.model.ProductList
+import com.app.greenveg.utils.toast
 import kotlinx.android.synthetic.main.product_list_fragment.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -51,6 +52,7 @@ class ProductListFragment : Fragment(),
     }
 
     override fun onFailure(msg: String) {
+        context?.toast(msg)
     }
 
     override val kodein by kodein()

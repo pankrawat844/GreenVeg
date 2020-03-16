@@ -1,4 +1,4 @@
-package com.app.greenveg.fragment.productlist
+package com.app.greenveg.ui.productlist
 
 import android.content.Context
 import android.content.Intent
@@ -51,7 +51,7 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
             holder.cut_price_txt.visibility = View.VISIBLE
             holder.cut_price.text = list[position].marketPrice
         }
-        holder.price.text = "Our Price: Rs" + list[position].sellingPrice
+        holder.price.text = "Our Price: Rs " + list[position].sellingPrice
         holder.addtocart.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 val productList = AppDatabase(context).cartDao().getCartProduct()

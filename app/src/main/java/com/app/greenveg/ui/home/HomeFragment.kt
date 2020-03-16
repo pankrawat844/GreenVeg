@@ -1,25 +1,23 @@
 package com.app.greenveg.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProviders
-import androidx.viewpager.widget.ViewPager
 import com.app.greenveg.R
-import com.app.greenveg.fragment.productlist.ProductListFragment
-import com.app.greenveg.home.HomeListener
-import com.app.greenveg.home.HomeViewModelFactory
-import com.app.greenveg.home.MainActivity
-import com.app.greenveg.home.MainActivityViewModel
 import com.app.greenveg.model.Category
-import kotlinx.android.synthetic.main.activity_main.*
+import com.app.greenveg.ui.productlist.ProductListFragment
+import com.app.greenveg.ui.search.SearchActivity
+import com.app.greenveg.utils.toast
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -27,10 +25,8 @@ import org.kodein.di.generic.instance
 
 
 class HomeFragment : Fragment(), HomeListener, KodeinAware {
-    lateinit var viewPager: ViewPager
-    lateinit var tabLayout: TableLayout
     val factory: HomeViewModelFactory by instance()
-    var pagerAdapter: MainActivity.MyViewPagerAdapter? = null
+    var pagerAdapter: MyViewPagerAdapter? = null
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -39,7 +35,7 @@ class HomeFragment : Fragment(), HomeListener, KodeinAware {
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         var viewmodel: MainActivityViewModel = ViewModelProviders.of(this, factory).get(
-                MainActivityViewModel::class.java
+            MainActivityViewModel::class.java
         )
         viewmodel.homeListener = this
         viewmodel.getAllCategory()
@@ -47,6 +43,19 @@ class HomeFragment : Fragment(), HomeListener, KodeinAware {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.searc.setOnClickListener {
+            if (view.search_txt.text.toString() == "") {
+                context?.toast("Please Enter Search Value")
+            } else {
+                Intent(activity, SearchActivity::class.java).also {
+                    it.putExtra("search", view.search_txt.text.toString())
+                    startActivity(it)
+                }
+            }
+        }
+    }
 
     class MyViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         val fragmentList: MutableList<Fragment>? = ArrayList<Fragment>()
@@ -77,7 +86,7 @@ class HomeFragment : Fragment(), HomeListener, KodeinAware {
     override fun onSuccess(response: List<Category.Response>) {
         mainProgress.visibility = View.GONE
         Log.e("TAG", "onSuccess: " + response.toString())
-        pagerAdapter = MainActivity.MyViewPagerAdapter(childFragmentManager)
+        pagerAdapter = MyViewPagerAdapter(childFragmentManager)
         for (i in response.iterator()) {
             val fragment =
                     ProductListFragment()
