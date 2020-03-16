@@ -55,6 +55,7 @@ class HomeFragment : Fragment(), HomeListener, KodeinAware {
                 }
             }
         }
+
     }
 
     class MyViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {

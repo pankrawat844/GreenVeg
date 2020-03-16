@@ -6,12 +6,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.cart.CartActivity">
 
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/green"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/sfuitext_regular"
+            android:text="Delivery Date: "
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/delivery_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/sfuitext_regular"
+            android:gravity="start"
+            android:text=""
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recylerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/footer"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <LinearLayout
         android:id="@+id/footer"
@@ -30,6 +58,7 @@
             android:textColor="@android:color/white" />
 
         <TextView
+            android:id="@+id/cart_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

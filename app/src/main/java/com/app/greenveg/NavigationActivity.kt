@@ -14,8 +14,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app.greenveg.db.AppDatabase
+import com.app.greenveg.fragment.cart.CartActivity
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.toolbar_home.*
+import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.toolbar_home.cart_item
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,6 +52,11 @@ class NavigationActivity : AppCompatActivity() {
             }
         }
 
+        cart.setOnClickListener {
+            Intent(this, CartActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
 
