@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/sfuitext_regular"
-            android:text="Delivery Date: "
+            android:text="Select Delivery Date: "
             android:textColor="@android:color/white" />
 
         <TextView

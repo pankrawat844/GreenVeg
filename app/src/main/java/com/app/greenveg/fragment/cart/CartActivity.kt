@@ -21,7 +21,7 @@ import java.util.*
 
 
 class CartActivity : AppCompatActivity() {
-    var total: Int? = 0
+    var total: Float? = 0.00f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -30,13 +30,18 @@ class CartActivity : AppCompatActivity() {
             val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
             withContext(Dispatchers.Main) {
                 for (i in cart) {
-                    total = total!! + i.sellingPrice?.toInt()!!
+                    total = total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity!!.toFloat())!!
                 }
                 cart_total.text = total!!.toString()
                 cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
                 cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
             }
         }
+        val mcurrentDate: Calendar = Calendar.getInstance()
+        val mYear: Int = mcurrentDate.get(Calendar.YEAR)
+        val mMonth: Int = mcurrentDate.get(Calendar.MONTH)
+        val mDay: Int = mcurrentDate.get(Calendar.DAY_OF_MONTH)
+        delivery_date.text = mDay.toString() + "/" + mMonth.toString() + "/" + mYear
 
         delivery_date.setOnClickListener {
             // To show current date in the datepicker
@@ -95,6 +100,8 @@ class CartActivity : AppCompatActivity() {
                         cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
                     }
                 }
+            } else if (intent?.action == "change_quantity") {
+
             }
         }
 

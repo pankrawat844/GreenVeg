@@ -1,9 +1,6 @@
 package com.app.greenveg.db
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface CartDao {
@@ -13,6 +10,9 @@ interface CartDao {
 
     @Insert
     fun addToCart(item: ProductEntity)
+
+    @Update
+    fun updateCart(item: ProductEntity)
 
     @Delete
     fun deleteFromCart(item: ProductEntity)
