@@ -55,7 +55,6 @@ class ProductDetailActivity : AppCompatActivity() {
             onBackPressed()
         }
         addtobag.setOnClickListener {
-
             CoroutineScope(Dispatchers.IO).launch {
                 val productList = AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
                 for (i in productList.iterator()) {
@@ -65,6 +64,49 @@ class ProductDetailActivity : AppCompatActivity() {
                         }
                         return@launch
                     }
+                }
+
+//                CoroutineScope(Dispatchers.IO).launch {
+//
+//                    AppDatabase(ctx).cartDao().updateCart(product)
+//                    withContext(Dispatchers.Main) {
+//                        ctx.sendBroadcast(Intent("update_cart"))
+//                    }
+//                }
+                if (data.unitOfMeasure == "KG") {
+                    if (quantity.selectedItem.toString() == "250g") {
+                        data.selected_quantity = 0.25f
+                    } else if (quantity.selectedItem.toString() == "500g") {
+                        data.selected_quantity = 0.50f
+                    } else if (quantity.selectedItem.toString() == "750g") {
+                        data.selected_quantity = 0.75f
+                    } else if (quantity.selectedItem.toString() == "1kg") {
+                        data.selected_quantity = 1.00f
+                    } else if (quantity.selectedItem.toString() == "1.25kg") {
+                        data.selected_quantity = 1.25f
+                    } else if (quantity.selectedItem.toString() == "1.5kg") {
+                        data.selected_quantity = 1.50f
+                    } else if (quantity.selectedItem.toString() == "1.75kg") {
+                        data.selected_quantity = 1.75f
+                    } else if (quantity.selectedItem.toString() == "2kg") {
+                        data.selected_quantity = 2.00f
+                    } else if (quantity.selectedItem.toString() == "2.25kg") {
+                        data.selected_quantity = 2.25f
+                    } else if (quantity.selectedItem.toString() == "2.5kg") {
+                        data.selected_quantity = 2.50f
+                    } else if (quantity.selectedItem.toString() == "2.75kg") {
+                        data.selected_quantity = 2.75f
+                    } else if (quantity.selectedItem.toString() == "3kg") {
+                        data.selected_quantity = 3.00f
+                    } else if (quantity.selectedItem.toString() == "3.25kg") {
+                        data.selected_quantity = 3.25f
+                    } else if (quantity.selectedItem.toString() == "3.5kg") {
+                        data.selected_quantity = 3.50f
+                    } else if (quantity.selectedItem.toString() == "3.75kg") {
+                        data.selected_quantity = 3.75f
+                    }
+                } else {
+                    data.selected_quantity = quantity.selectedItem.toString().toFloatOrNull()!!
                 }
                 AppDatabase(this@ProductDetailActivity).cartDao().addToCart(data)
                 val size = AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
@@ -76,6 +118,8 @@ class ProductDetailActivity : AppCompatActivity() {
                 }
             }
         }
+
+
 
 
         buy_now.setOnClickListener {

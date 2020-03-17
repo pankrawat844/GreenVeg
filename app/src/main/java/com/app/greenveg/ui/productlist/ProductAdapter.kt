@@ -63,6 +63,13 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
                         return@launch
                     }
                 }
+                if (list[position].unitOfMeasure == "KG") {
+                    list[position].selected_quantity = 0.25f
+                    list[position].selected_quantity_txt = "250g"
+                } else {
+                    list[position].selected_quantity = 2f
+                    list[position].selected_quantity_txt = "2"
+                }
                 AppDatabase(context).cartDao().addToCart(list[position])
                 withContext(Main) {
                     context.toast("${list[position].productName} added to basket")
@@ -84,10 +91,18 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
                         return@launch
                     }
                 }
+                if (list[position].unitOfMeasure == "KG") {
+                    list[position].selected_quantity = 0.25f
+                    list[position].selected_quantity_txt = "250g"
+                } else {
+                    list[position].selected_quantity = 2f
+                    list[position].selected_quantity_txt = "2"
+                }
                 AppDatabase(context).cartDao().addToCart(list[position])
 //               context.toast("$list[position].productName added to basket")
                 val intent = Intent()
                 intent.action = "change_value"
+
 
                 withContext(Main) {
                     context.toast("${list[position].productName} added to basket")

@@ -30,7 +30,8 @@ class CartActivity : AppCompatActivity() {
             val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
             withContext(Dispatchers.Main) {
                 for (i in cart) {
-                    total = total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity!!.toFloat())!!
+                    total =
+                        total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity.toFloat())!!
                 }
                 cart_total.text = total!!.toString()
                 cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
@@ -41,7 +42,7 @@ class CartActivity : AppCompatActivity() {
         val mYear: Int = mcurrentDate.get(Calendar.YEAR)
         val mMonth: Int = mcurrentDate.get(Calendar.MONTH)
         val mDay: Int = mcurrentDate.get(Calendar.DAY_OF_MONTH)
-        delivery_date.text = mDay.toString() + "/" + mMonth.toString() + "/" + mYear
+        delivery_date.text = mDay.toString() + "/" + mMonth + 1.toString() + "/" + mYear
 
         delivery_date.setOnClickListener {
             // To show current date in the datepicker
@@ -101,7 +102,18 @@ class CartActivity : AppCompatActivity() {
                     }
                 }
             } else if (intent?.action == "change_quantity") {
+                total = 0.00f
+                CoroutineScope(Dispatchers.IO).launch {
+                    val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
+                    withContext(Dispatchers.Main) {
+                        for (i in cart) {
+                            total = total!! + i.sellingPrice?.toInt()
+                                ?.times(i.selected_quantity.toFloat())!!
+                        }
+                        cart_total.text = total!!.toString()
 
+                    }
+                }
             }
         }
 
@@ -110,6 +122,8 @@ class CartActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         registerReceiver(broadcastReceiver, IntentFilter("update_cart"))
+        registerReceiver(broadcastReceiver, IntentFilter("change_quantity"))
+
     }
 
     override fun onStop() {

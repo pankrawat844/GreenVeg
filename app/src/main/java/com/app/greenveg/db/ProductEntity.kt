@@ -7,37 +7,37 @@ import java.io.Serializable
 
 @Entity(tableName = "Product")
 data class ProductEntity(
-        @PrimaryKey(autoGenerate = true) val id: Int?,
-        @SerializedName("base_price")
+    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @SerializedName("base_price")
     val basePrice: String?,
-        @SerializedName("current_stock_qty")
+    @SerializedName("current_stock_qty")
     val currentStockQty: String?,
-        @SerializedName("market_price")
+    @SerializedName("market_price")
     val marketPrice: String?,
-        @SerializedName("price_date")
+    @SerializedName("price_date")
     val priceDate: String?,
-        @SerializedName("product_category")
+    @SerializedName("product_category")
     val productCategory: String?,
-        @SerializedName("product_desc")
+    @SerializedName("product_desc")
     val productDesc: String?,
-        @SerializedName("product_id")
+    @SerializedName("product_id")
     val productId: String?,
-        @SerializedName("product_image1")
+    @SerializedName("product_image1")
     val productImage1: String?,
-        @SerializedName("product_image2")
+    @SerializedName("product_image2")
     val productImage2: String?,
-        @SerializedName("product_image3")
+    @SerializedName("product_image3")
         val productImage3: String?,
-        @SerializedName("product_image4")
-        val productImage4: String?,
-        @SerializedName("product_name")
-        val productName: String?,
-        @SerializedName("selling_price")
-        val sellingPrice: String?,
-        @SerializedName("status")
-        val status: String?,
-        @SerializedName("unit_of_measure")
-        val unitOfMeasure: String?,
-        @SerializedName("selected_quantity")
-        val selected_quantity: String?
+    @SerializedName("product_image4")
+    val productImage4: String?,
+    @SerializedName("product_name")
+    val productName: String?,
+    @SerializedName("selling_price")
+    val sellingPrice: String?,
+    @SerializedName("status")
+    val status: String?,
+    @SerializedName("unit_of_measure")
+    val unitOfMeasure: String?,
+    var selected_quantity: Float = 0.00f,
+    var selected_quantity_txt: String = ""
 ) : Serializable
