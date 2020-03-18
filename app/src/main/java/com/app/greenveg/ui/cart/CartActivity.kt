@@ -1,5 +1,6 @@
-package com.app.greenveg.fragment.cart
+package com.app.greenveg.ui.cart
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.BroadcastReceiver
@@ -23,6 +24,7 @@ import java.util.*
 
 class CartActivity : AppCompatActivity() {
     var total: Float? = 0.00f
+
     var adapter: CartAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +32,15 @@ class CartActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
+            var itemTotal: Int? = AppDatabase(this@CartActivity).cartDao().getCartProduct().size
             withContext(Dispatchers.Main) {
                 for (i in cart) {
                     total =
                             total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity.toFloat())!!
+
                 }
                 cart_total.text = total!!.toString()
+                item_total.text = itemTotal.toString()
                 cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
                 adapter = CartAdapter(this@CartActivity, cart)
                 cart_recylerview.adapter = adapter
@@ -46,7 +51,7 @@ class CartActivity : AppCompatActivity() {
         val mYear: Int = mcurrentDate.get(Calendar.YEAR)
         val mMonth: Int = mcurrentDate.get(Calendar.MONTH)
         val mDay: Int = mcurrentDate.get(Calendar.DAY_OF_MONTH)
-        delivery_date.text = mDay.toString() + "/" + (mMonth + 1).toString() + "/" + mYear
+        delivery_date.text = (mDay + 1).toString() + "/" + (mMonth + 1).toString() + "/" + mYear
 
         delivery_date.setOnClickListener {
             val mcurrentDate: Calendar = Calendar.getInstance()
@@ -82,11 +87,10 @@ class CartActivity : AppCompatActivity() {
                 "Select Date"
             )
             val mcurrentDate1: Calendar = Calendar.getInstance()
-            val mYear1: Int = mcurrentDate.get(Calendar.YEAR)
-            val mMonth1: Int = mcurrentDate.get(Calendar.MONTH)
-            val mDay1: Int = mcurrentDate.get(Calendar.DAY_OF_MONTH)
+            val mindate: Calendar = Calendar.getInstance()
+            mindate.add(Calendar.DAY_OF_MONTH, 1)
             mcurrentDate1.add(Calendar.DAY_OF_MONTH, 5)
-            mDatePicker.datePicker.minDate = mcurrentDate.timeInMillis
+            mDatePicker.datePicker.minDate = mindate.timeInMillis
             mDatePicker.datePicker.maxDate = mcurrentDate1.timeInMillis
             mDatePicker.show()
         }
@@ -95,9 +99,26 @@ class CartActivity : AppCompatActivity() {
         }
 
         next.setOnClickListener {
-            Intent(this, LoginActivity::class.java).also {
-                startActivity(it)
+            val alartDialog = AlertDialog.Builder(this)
+            alartDialog.setTitle("Confirm Order")
+            alartDialog.setMessage("Are You Sure To Confirm This Order.")
+            alartDialog.setPositiveButton(
+                "Yes"
+            ) { dialog, which ->
+                Intent(this, LoginActivity::class.java).also {
+                    startActivity(it)
+                }
+                dialog.dismiss()
             }
+
+            alartDialog.setNegativeButton(
+                "No"
+            ) { dialog, which ->
+                dialog.dismiss()
+            }
+
+            alartDialog.create().show()
+
         }
     }
 
@@ -109,18 +130,27 @@ class CartActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
                         cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
+                        item_total.text =
+                            AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+                                .toString()
+
                     }
                 }
             } else if (intent?.action == "change_quantity") {
                 total = 0.00f
                 CoroutineScope(Dispatchers.IO).launch {
                     val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
+                    var itemTotal: Int? =
+                        AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+
                     withContext(Dispatchers.Main) {
                         for (i in cart) {
                             total = total!! + i.sellingPrice?.toInt()
-                                    ?.times(i.selected_quantity.toFloat())!!
+                                ?.times(i.selected_quantity.toFloat())!!
                         }
                         cart_total.text = total!!.toString()
+                        item_total.text = itemTotal.toString()
+
                         cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
                         cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
                     }

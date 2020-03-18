@@ -20,7 +20,7 @@
         android:fontFamily="@font/sfuitext_regular"
         android:text=""
         android:textColor="@android:color/black"
-        android:textSize="15sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/img"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,11 +34,23 @@
         app:layout_constraintStart_toEndOf="@+id/img"
         app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
+    <TextView
+        android:id="@+id/select"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfuitext_regular"
+        android:text="Select Quantity: "
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/quantity"
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toBottomOf="@+id/price"
+        app:layout_constraintTop_toTopOf="@+id/quantity" />
+
     <com.app.greenveg.utils.MySpinner
         android:id="@+id/quantity"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintStart_toEndOf="@+id/select"
         app:layout_constraintTop_toBottomOf="@+id/price"
 
         />

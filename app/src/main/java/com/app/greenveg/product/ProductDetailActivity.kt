@@ -13,7 +13,7 @@ import com.app.greenveg.R
 import com.app.greenveg.databinding.ActivityProductlBinding
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.db.ProductEntity
-import com.app.greenveg.fragment.cart.CartActivity
+import com.app.greenveg.ui.cart.CartActivity
 import com.app.greenveg.utils.toast
 import kotlinx.android.synthetic.main.activity_productl.*
 import kotlinx.coroutines.CoroutineScope
@@ -96,16 +96,43 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         buy_now.setOnClickListener {
-            addtobag.setOnClickListener {
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    val productList =
-                            AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
-                    for (i in productList.iterator()) {
-                        if (i.productId == data.productId) {
-                            withContext(Dispatchers.Main) {
-                                toast("${data.productName} already added to basket.")
-                            }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val productList =
+                    AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
+                for (i in productList.iterator()) {
+                    if (i.productId == data.productId) {
+                        withContext(Dispatchers.Main) {
+                            toast("${data.productName} already added to basket.")
+                        }
+                        return@launch
+                    }
+                }
+                AppDatabase(this@ProductDetailActivity).cartDao().addToCart(data)
+                val size =
+                    AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
+                withContext(Dispatchers.Main) {
+                    cart_item.text = size.toString()
+                    toast("${data.productName} added to basket")
+                    sendBroadcast(Intent("change_value"))
+                }
+            }
+
+            Intent(this, CartActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        addtobag.setOnClickListener {
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val productList =
+                    AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
+                for (i in productList.iterator()) {
+                    if (i.productId == data.productId) {
+                        withContext(Dispatchers.Main) {
+                            toast("${data.productName} already added to basket.")
+                        }
                             return@launch
                         }
                     }
@@ -116,11 +143,10 @@ class ProductDetailActivity : AppCompatActivity() {
                         cart_item.text = size.toString()
                         toast("${data.productName} added to basket")
                         sendBroadcast(Intent("change_value"))
-
                     }
                 }
             }
-        }
+
         if (data.unitOfMeasure.equals("KG")) {
             val adapter =
                     ArrayAdapter(

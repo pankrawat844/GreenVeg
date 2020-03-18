@@ -10,6 +10,7 @@ import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.db.ProductEntity
 import com.app.greenveg.product.ProductDetailActivity
+import com.app.greenveg.ui.cart.CartActivity
 import com.app.greenveg.utils.Constants
 import com.app.greenveg.utils.toast
 import com.squareup.picasso.Picasso
@@ -79,7 +80,6 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
             }
         }
         holder.buy_now.setOnClickListener {
-
             CoroutineScope(Dispatchers.IO).launch {
 
                 val productList = AppDatabase(context).cartDao().getCartProduct()
@@ -110,6 +110,9 @@ class ProductAdapter(private val context: Context, private val list: List<Produc
                     context.sendBroadcast(Intent("change_value"))
                 }
 
+            }
+            Intent(context, CartActivity::class.java).also {
+                context.startActivity(it)
             }
         }
 

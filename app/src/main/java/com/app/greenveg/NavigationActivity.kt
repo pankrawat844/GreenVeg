@@ -14,7 +14,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app.greenveg.db.AppDatabase
-import com.app.greenveg.fragment.cart.CartActivity
+import com.app.greenveg.ui.cart.CartActivity
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.toolbar_home.cart_item
