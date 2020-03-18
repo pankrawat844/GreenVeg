@@ -3,6 +3,8 @@ package com.app.greenveg.product
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SpinnerAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import com.app.greenveg.R
 import com.app.greenveg.databinding.ActivityProductlBinding
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.db.ProductEntity
+import com.app.greenveg.fragment.cart.CartActivity
 import com.app.greenveg.utils.toast
 import kotlinx.android.synthetic.main.activity_productl.*
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +28,7 @@ class ProductDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val databinding: ActivityProductlBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_productl)
+                DataBindingUtil.setContentView(this, R.layout.activity_productl)
         val data = intent.getSerializableExtra("data") as ProductEntity
         databinding.data = data
         if (data.productImage1 != "") {
@@ -73,41 +76,7 @@ class ProductDetailActivity : AppCompatActivity() {
 //                        ctx.sendBroadcast(Intent("update_cart"))
 //                    }
 //                }
-                if (data.unitOfMeasure == "KG") {
-                    if (quantity.selectedItem.toString() == "250g") {
-                        data.selected_quantity = 0.25f
-                    } else if (quantity.selectedItem.toString() == "500g") {
-                        data.selected_quantity = 0.50f
-                    } else if (quantity.selectedItem.toString() == "750g") {
-                        data.selected_quantity = 0.75f
-                    } else if (quantity.selectedItem.toString() == "1kg") {
-                        data.selected_quantity = 1.00f
-                    } else if (quantity.selectedItem.toString() == "1.25kg") {
-                        data.selected_quantity = 1.25f
-                    } else if (quantity.selectedItem.toString() == "1.5kg") {
-                        data.selected_quantity = 1.50f
-                    } else if (quantity.selectedItem.toString() == "1.75kg") {
-                        data.selected_quantity = 1.75f
-                    } else if (quantity.selectedItem.toString() == "2kg") {
-                        data.selected_quantity = 2.00f
-                    } else if (quantity.selectedItem.toString() == "2.25kg") {
-                        data.selected_quantity = 2.25f
-                    } else if (quantity.selectedItem.toString() == "2.5kg") {
-                        data.selected_quantity = 2.50f
-                    } else if (quantity.selectedItem.toString() == "2.75kg") {
-                        data.selected_quantity = 2.75f
-                    } else if (quantity.selectedItem.toString() == "3kg") {
-                        data.selected_quantity = 3.00f
-                    } else if (quantity.selectedItem.toString() == "3.25kg") {
-                        data.selected_quantity = 3.25f
-                    } else if (quantity.selectedItem.toString() == "3.5kg") {
-                        data.selected_quantity = 3.50f
-                    } else if (quantity.selectedItem.toString() == "3.75kg") {
-                        data.selected_quantity = 3.75f
-                    }
-                } else {
-                    data.selected_quantity = quantity.selectedItem.toString().toFloatOrNull()!!
-                }
+
                 AppDatabase(this@ProductDetailActivity).cartDao().addToCart(data)
                 val size = AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
                 withContext(Dispatchers.Main) {
@@ -120,14 +89,18 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
 
-
+        button1.setOnClickListener {
+            Intent(this, CartActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
         buy_now.setOnClickListener {
             addtobag.setOnClickListener {
 
                 CoroutineScope(Dispatchers.IO).launch {
                     val productList =
-                        AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
+                            AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct()
                     for (i in productList.iterator()) {
                         if (i.productId == data.productId) {
                             withContext(Dispatchers.Main) {
@@ -138,7 +111,7 @@ class ProductDetailActivity : AppCompatActivity() {
                     }
                     AppDatabase(this@ProductDetailActivity).cartDao().addToCart(data)
                     val size =
-                        AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
+                            AppDatabase(this@ProductDetailActivity).cartDao().getCartProduct().size
                     withContext(Dispatchers.Main) {
                         cart_item.text = size.toString()
                         toast("${data.productName} added to basket")
@@ -150,23 +123,69 @@ class ProductDetailActivity : AppCompatActivity() {
         }
         if (data.unitOfMeasure.equals("KG")) {
             val adapter =
-                ArrayAdapter(
-                    this,
-                    R.layout.spinner_item,
-                    resources.getStringArray(R.array.kg_array)
-                )
+                    ArrayAdapter(
+                            this,
+                            R.layout.spinner_item,
+                            resources.getStringArray(R.array.kg_array)
+                    )
             quantity.adapter = adapter
         } else {
 
             val adapter =
-                ArrayAdapter(
-                    this,
-                    R.layout.spinner_item,
-                    resources.getStringArray(R.array.kg_bundle)
-                ) as SpinnerAdapter
+                    ArrayAdapter(
+                            this,
+                            R.layout.spinner_item,
+                            resources.getStringArray(R.array.kg_bundle)
+                    ) as SpinnerAdapter
             quantity.adapter = adapter
 
         }
 
+        quantity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (data.unitOfMeasure == "KG") {
+                    if (parent?.selectedItem.toString() == "250g") {
+                        data.selected_quantity = 0.25f
+                    } else if (parent?.selectedItem.toString() == "500g") {
+                        data.selected_quantity = 0.50f
+                    } else if (parent?.selectedItem.toString() == "750g") {
+                        data.selected_quantity = 0.75f
+                    } else if (parent?.selectedItem.toString() == "1kg") {
+                        data.selected_quantity = 1.00f
+                    } else if (parent?.selectedItem.toString() == "1.25kg") {
+                        data.selected_quantity = 1.25f
+                    } else if (parent?.selectedItem.toString() == "1.5kg") {
+                        data.selected_quantity = 1.50f
+                    } else if (parent?.selectedItem.toString() == "1.75kg") {
+                        data.selected_quantity = 1.75f
+                    } else if (parent?.selectedItem.toString() == "2kg") {
+                        data.selected_quantity = 2.00f
+                    } else if (parent?.selectedItem.toString() == "2.25kg") {
+                        data.selected_quantity = 2.25f
+                    } else if (parent?.selectedItem.toString() == "2.5kg") {
+                        data.selected_quantity = 2.50f
+                    } else if (parent?.selectedItem.toString() == "2.75kg") {
+                        data.selected_quantity = 2.75f
+                    } else if (parent?.selectedItem.toString() == "3kg") {
+                        data.selected_quantity = 3.00f
+                    } else if (parent?.selectedItem.toString() == "3.25kg") {
+                        data.selected_quantity = 3.25f
+                    } else if (parent?.selectedItem.toString() == "3.5kg") {
+                        data.selected_quantity = 3.50f
+                    } else if (parent?.selectedItem.toString() == "3.75kg") {
+                        data.selected_quantity = 3.75f
+                    }
+                } else {
+                    data.selected_quantity =
+                            parent?.selectedItem.toString().toFloatOrNull()!!
+                }
+                data.selected_quantity_txt = parent?.selectedItem.toString()
+            }
+
+        }
     }
 }

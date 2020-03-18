@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
+import com.app.greenveg.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,7 @@ import java.util.*
 
 class CartActivity : AppCompatActivity() {
     var total: Float? = 0.00f
+    var adapter: CartAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -31,23 +33,22 @@ class CartActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 for (i in cart) {
                     total =
-                        total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity.toFloat())!!
+                            total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity.toFloat())!!
                 }
                 cart_total.text = total!!.toString()
                 cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
-                cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
+                adapter = CartAdapter(this@CartActivity, cart)
+                cart_recylerview.adapter = adapter
+
             }
         }
         val mcurrentDate: Calendar = Calendar.getInstance()
         val mYear: Int = mcurrentDate.get(Calendar.YEAR)
         val mMonth: Int = mcurrentDate.get(Calendar.MONTH)
         val mDay: Int = mcurrentDate.get(Calendar.DAY_OF_MONTH)
-        delivery_date.text = mDay.toString() + "/" + mMonth + 1.toString() + "/" + mYear
+        delivery_date.text = mDay.toString() + "/" + (mMonth + 1).toString() + "/" + mYear
 
         delivery_date.setOnClickListener {
-            // To show current date in the datepicker
-
-            // To show current date in the datepicker
             val mcurrentDate: Calendar = Calendar.getInstance()
             val mYear: Int = mcurrentDate.get(Calendar.YEAR)
             val mMonth: Int = mcurrentDate.get(Calendar.MONTH)
@@ -84,10 +85,19 @@ class CartActivity : AppCompatActivity() {
             val mYear1: Int = mcurrentDate.get(Calendar.YEAR)
             val mMonth1: Int = mcurrentDate.get(Calendar.MONTH)
             val mDay1: Int = mcurrentDate.get(Calendar.DAY_OF_MONTH)
-            mcurrentDate1.add(Calendar.DAY_OF_MONTH, 4)
+            mcurrentDate1.add(Calendar.DAY_OF_MONTH, 5)
             mDatePicker.datePicker.minDate = mcurrentDate.timeInMillis
             mDatePicker.datePicker.maxDate = mcurrentDate1.timeInMillis
             mDatePicker.show()
+        }
+        back.setOnClickListener {
+            onBackPressed()
+        }
+
+        next.setOnClickListener {
+            Intent(this, LoginActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 
@@ -108,10 +118,11 @@ class CartActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         for (i in cart) {
                             total = total!! + i.sellingPrice?.toInt()
-                                ?.times(i.selected_quantity.toFloat())!!
+                                    ?.times(i.selected_quantity.toFloat())!!
                         }
                         cart_total.text = total!!.toString()
-
+                        cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
+                        cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
                     }
                 }
             }

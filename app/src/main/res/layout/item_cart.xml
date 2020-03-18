@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sfuitext_regular"
         android:text=""
+        android:textColor="@android:color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/img"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,10 +30,11 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sfuitext_regular"
         android:text="Price"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toEndOf="@+id/img"
         app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
+    <com.app.greenveg.utils.MySpinner
         android:id="@+id/quantity"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -54,11 +56,17 @@
         android:id="@+id/total"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="5dp"
+        android:textColor="@android:color/black"
         android:fontFamily="@font/sfuitext_regular"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toBottomOf="@+id/quantity" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

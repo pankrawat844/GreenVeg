@@ -30,6 +30,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
         val product_price = itemview.price
         val delete = itemview.delete
         val quantity = itemview.quantity
+        val product_total = itemview.total
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
@@ -53,7 +54,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
                 AppDatabase(ctx).cartDao().deleteFromCart(product)
                 withContext(Dispatchers.Main) {
                     ctx.toast("${list[position].productName} remove from basket")
-                    ctx.sendBroadcast(Intent("update_cart"))
+                    ctx.sendBroadcast(Intent("change_quantity"))
                 }
             }
         }
@@ -75,66 +76,70 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
                 R.layout.spinner_item,
                 ctx.resources.getStringArray(R.array.kg_bundle)
             )
+            for ((i, value) in ctx.resources.getStringArray(R.array.kg_bundle).withIndex()) {
 
+                if (value.contains(product.selected_quantity_txt.toString())) {
+                    holder.quantity.setSelection(i)
+                }
+            }
         }
 
 
+        holder.product_total.text = "Product Total: " + (product.sellingPrice?.toFloat()?.times(product.selected_quantity)).toString()
 
 
-
-        holder.quantity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        holder.quantity.setOnItemSelectedEvenIfUnchangedListener(object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
             ) {
-//                product.selected_quantity=parent?.selectedItem.toString().toFloat()
+//                product.selected_quantity=parent?.getItemAtPosition(position).toString().toFloat()
 
                 if (product.unitOfMeasure == "KG") {
-                    if (parent?.selectedItem.toString() == "250g") {
+                    if (holder.quantity.selectedItem.toString() == "250g") {
                         product.selected_quantity = 0.25f
-                    } else if (parent?.selectedItem.toString() == "500g") {
+                    } else if (holder.quantity.selectedItem.toString() == "500g") {
                         product.selected_quantity = 0.50f
-                    } else if (parent?.selectedItem.toString() == "750g") {
+                    } else if (holder.quantity.selectedItem.toString() == "750g") {
                         product.selected_quantity = 0.75f
-                    } else if (parent?.selectedItem.toString() == "1kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "1kg") {
                         product.selected_quantity = 1.00f
-                    } else if (parent?.selectedItem.toString() == "1.25kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "1.25kg") {
                         product.selected_quantity = 1.25f
-                    } else if (parent?.selectedItem.toString() == "1.5kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "1.5kg") {
                         product.selected_quantity = 1.50f
-                    } else if (parent?.selectedItem.toString() == "1.75kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "1.75kg") {
                         product.selected_quantity = 1.75f
-                    } else if (parent?.selectedItem.toString() == "2kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "2kg") {
                         product.selected_quantity = 2.00f
-                    } else if (parent?.selectedItem.toString() == "2.25kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "2.25kg") {
                         product.selected_quantity = 2.25f
-                    } else if (parent?.selectedItem.toString() == "2.5kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "2.5kg") {
                         product.selected_quantity = 2.50f
-                    } else if (parent?.selectedItem.toString() == "2.75kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "2.75kg") {
                         product.selected_quantity = 2.75f
-                    } else if (parent?.selectedItem.toString() == "3kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "3kg") {
                         product.selected_quantity = 3.00f
-                    } else if (parent?.selectedItem.toString() == "3.25kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "3.25kg") {
                         product.selected_quantity = 3.25f
-                    } else if (parent?.selectedItem.toString() == "3.5kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "3.5kg") {
                         product.selected_quantity = 3.50f
-                    } else if (parent?.selectedItem.toString() == "3.75kg") {
+                    } else if (holder.quantity.selectedItem.toString() == "3.75kg") {
                         product.selected_quantity = 3.75f
                     }
                 } else {
                     product.selected_quantity =
-                        parent?.selectedItem.toString().toFloatOrNull()!!
+                            holder.quantity.selectedItem.toString().toFloat()
                 }
-                product.selected_quantity_txt = parent?.selectedItem.toString()
+                product.selected_quantity_txt = holder.quantity.selectedItem.toString()
 //                    if (old_Quantity != parent?.getItemAtPosition(position).toString()) {
 //                        old_Quantity = holder.quantity.selectedItem.toString()
-                holder.quantity.setSelection(position)
                 CoroutineScope(Dispatchers.IO).launch {
                     AppDatabase(ctx).cartDao().updateCart(product)
 
@@ -146,6 +151,6 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
 
             }
 
-        }
+        })
     }
 }
