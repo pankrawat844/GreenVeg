@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.ui.login.LoginActivity
@@ -137,22 +138,24 @@ class CartActivity : AppCompatActivity() {
                     }
                 }
             } else if (intent?.action == "change_quantity") {
-                total = 0.00f
-                CoroutineScope(Dispatchers.IO).launch {
-                    val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
-                    var itemTotal: Int? =
-                        AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+                if (cart_recylerview.scrollState == RecyclerView.SCROLL_STATE_IDLE) {
+                    total = 0.00f
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
+                        var itemTotal: Int? =
+                                AppDatabase(this@CartActivity).cartDao().getCartProduct().size
 
-                    withContext(Dispatchers.Main) {
-                        for (i in cart) {
-                            total = total!! + i.sellingPrice?.toInt()
-                                ?.times(i.selected_quantity.toFloat())!!
+                        withContext(Dispatchers.Main) {
+                            for (i in cart) {
+                                total = total!! + i.sellingPrice?.toInt()
+                                        ?.times(i.selected_quantity.toFloat())!!
+                            }
+                            cart_total.text = total!!.toString()
+                            item_total.text = itemTotal.toString()
+
+                            cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
+                            cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
                         }
-                        cart_total.text = total!!.toString()
-                        item_total.text = itemTotal.toString()
-
-                        cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
-                        cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
                     }
                 }
             }

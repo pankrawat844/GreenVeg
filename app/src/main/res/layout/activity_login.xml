@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="data"
+            type="com.app.greenveg.ui.login.LoginViewModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="160dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="35dp"
-            android:src="@drawable/logo" />
+        android:background="#ffffff">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="35dp"
+                android:src="@drawable/logo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:background="@drawable/rect_gray"
@@ -42,6 +51,7 @@
                 android:inputType="text"
                 android:padding="8dp"
                 android:textColor="#000000"
+                android:text="@={data.email}"
                 android:textColorHint="#c6c6c6" />
         </LinearLayout>
 
@@ -66,6 +76,7 @@
                 android:background="#00000000"
                 android:fontFamily="@font/sfuitext_regular"
                 android:hint="Password"
+                android:text="@={data.password}"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="#000000"
@@ -117,6 +128,7 @@
             android:gravity="center_horizontal"
             android:padding="15dp"
             android:text="LOGIN"
+            android:onClick="@{data.getLogin}"
             android:textAllCaps="false"
             android:textColor="#ffffff"
             android:textSize="15sp" />
@@ -179,7 +191,8 @@
                 android:textColor="#ef5037"
                 android:textSize="15sp" />
         </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

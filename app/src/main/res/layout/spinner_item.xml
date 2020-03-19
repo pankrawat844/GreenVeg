@@ -5,7 +5,7 @@
     android:fontFamily="@font/roboto_regular"
     android:gravity="top"
     android:letterSpacing="0.02"
-    android:padding="16dp"
+    android:padding="5dp"
     android:singleLine="true"
     android:textColor="@color/text"
     android:textSize="12dp" />

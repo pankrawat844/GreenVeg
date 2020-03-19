@@ -48,7 +48,7 @@
 
     <com.app.greenveg.utils.MySpinner
         android:id="@+id/quantity"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/select"
         app:layout_constraintTop_toBottomOf="@+id/price"

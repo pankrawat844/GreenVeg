@@ -5,6 +5,8 @@ import com.app.greenveg.repo.Repository
 import com.app.greenveg.ui.home.HomeFragment
 import com.app.greenveg.ui.home.HomeViewModelFactory
 import com.app.greenveg.ui.home.MainActivityViewModel
+import com.app.greenveg.ui.login.LoginViewModel
+import com.app.greenveg.ui.login.LoginViewModelFactory
 import com.app.greenveg.ui.productlist.ProductListModelFactory
 import com.app.greenveg.ui.productlist.ProductListViewModel
 import com.app.greenveg.ui.search.SearchViewModel
@@ -37,13 +39,15 @@ class MainApplication:Application(),KodeinAware {
         }
         bind() from singleton {
             ProductListViewModel(
-                instance()
+                    instance()
             )
         }
 
         bind() from singleton { HomeFragment() }
         bind() from singleton { SearchViewModel(instance()) }
         bind() from singleton { SearchViewModelFactory(instance()) }
+        bind() from singleton { LoginViewModel(instance()) }
+        bind() from singleton { LoginViewModelFactory(instance()) }
     }
 
 }

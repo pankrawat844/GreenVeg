@@ -12,10 +12,12 @@ data class User(
 ) {
     @Keep
     data class Data(
-        @SerializedName("response")
-        val response: Response,
-        @SerializedName("success")
-        val success: Boolean
+            @SerializedName("response")
+            val response: Response,
+            @SerializedName("success")
+            val success: Boolean,
+            @SerializedName("msg")
+            val msg: String
     ) {
         @Keep
         data class Response(

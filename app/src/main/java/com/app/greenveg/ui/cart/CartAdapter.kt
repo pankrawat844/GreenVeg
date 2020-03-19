@@ -162,9 +162,28 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
                         } else if (holder.quantity.selectedItem.toString() == "3.75kg") {
                             product.selected_quantity = 3.75f
                         }
-                    } else {
+                    } else if (product.unitOfMeasure == "BUNDLE" || product.unitOfMeasure == "NUMBER") {
                         product.selected_quantity =
-                            holder.quantity.selectedItem.toString().toFloat()
+                                holder.quantity.selectedItem.toString().toFloat()
+                        if (holder.quantity.selectedItem.toString() == "2") {
+                            product.selected_quantity = 2f
+                        } else if (holder.quantity.selectedItem.toString() == "3") {
+                            product.selected_quantity = 3f
+                        } else if (holder.quantity.selectedItem.toString() == "4") {
+                            product.selected_quantity = 4f
+                        } else if (holder.quantity.selectedItem.toString() == "5") {
+                            product.selected_quantity = 5f
+                        } else if (holder.quantity.selectedItem.toString() == "6") {
+                            product.selected_quantity = 6f
+                        } else if (holder.quantity.selectedItem.toString() == "7") {
+                            product.selected_quantity = 7f
+                        } else if (holder.quantity.selectedItem.toString() == "8") {
+                            product.selected_quantity = 8f
+                        } else if (holder.quantity.selectedItem.toString() == "9") {
+                            product.selected_quantity = 9f
+                        } else if (holder.quantity.selectedItem.toString() == "10") {
+                            product.selected_quantity = 10f
+                        }
                     }
                     product.selected_quantity_txt = holder.quantity.selectedItem.toString()
 //                    if (old_Quantity != parent?.getItemAtPosition(position).toString()) {
@@ -173,8 +192,6 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
                         AppDatabase(ctx).cartDao().updateCart(product)
 
                     }
-//
-
 
                     ctx.sendBroadcast(Intent("change_quantity"))
 
