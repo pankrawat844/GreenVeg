@@ -1,9 +1,11 @@
 package com.app.greenveg.ui.login
 
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.app.greenveg.model.User
 import com.app.greenveg.repo.Repository
+import com.app.greenveg.ui.signup.SignupActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,6 +45,12 @@ class LoginViewModel(val repository: Repository) : ViewModel() {
                 }
 
             })
+        }
+    }
+
+    fun getSignup(view: View) {
+        Intent(view.context, SignupActivity::class.java).also {
+            view.context.startActivity(it)
         }
     }
 }

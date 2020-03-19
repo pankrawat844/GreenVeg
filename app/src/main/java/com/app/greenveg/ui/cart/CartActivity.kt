@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.ui.login.LoginActivity
+import com.app.greenveg.utils.toast
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -100,25 +101,40 @@ class CartActivity : AppCompatActivity() {
         }
 
         next.setOnClickListener {
-            val alartDialog = AlertDialog.Builder(this)
-            alartDialog.setTitle("Confirm Order")
-            alartDialog.setMessage("Are You Sure To Confirm This Order.")
-            alartDialog.setPositiveButton(
-                "Yes"
-            ) { dialog, which ->
-                Intent(this, LoginActivity::class.java).also {
-                    startActivity(it)
+            CoroutineScope(Dispatchers.IO).launch {
+
+                var itemTotal: Int? =
+                    AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+
+                if (itemTotal!! > 0) {
+                    withContext(Dispatchers.Main) {
+                        val alartDialog = AlertDialog.Builder(this@CartActivity)
+                        alartDialog.setTitle("Confirm Order")
+                        alartDialog.setMessage("Are You Sure To Confirm This Order.")
+                        alartDialog.setPositiveButton(
+                            "Yes"
+                        ) { dialog, which ->
+                            Intent(this@CartActivity, LoginActivity::class.java).also {
+                                startActivity(it)
+                            }
+                            dialog.dismiss()
+                        }
+
+                        alartDialog.setNegativeButton(
+                            "No"
+                        ) { dialog, which ->
+                            dialog.dismiss()
+                        }
+
+                        alartDialog.create().show()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        toast("Basket value is must be greater than 0 for Ordering.")
+                    }
                 }
-                dialog.dismiss()
             }
 
-            alartDialog.setNegativeButton(
-                "No"
-            ) { dialog, which ->
-                dialog.dismiss()
-            }
-
-            alartDialog.create().show()
 
         }
     }
@@ -155,6 +171,7 @@ class CartActivity : AppCompatActivity() {
 
                             cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
                             cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
+//                            adapter?.notifyDataSetChanged()
                         }
                     }
                 }

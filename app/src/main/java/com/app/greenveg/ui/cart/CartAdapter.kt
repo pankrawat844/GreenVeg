@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.db.ProductEntity
-import com.app.greenveg.utils.Constants
 import com.app.greenveg.utils.toast
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_cart.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,7 +45,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         var old_Quantity = ""
         val product = list[position]
-        Picasso.get().load(Constants.imageUrl + product.productImage1).into(holder.img)
+//        Picasso.get().load(Constants.imageUrl + product.productImage1).into(holder.img)
         holder.product_name.text = product.productName
         if (product.unitOfMeasure == "KG") {
             holder.product_price.text = "Unit Price: Rs " + product.sellingPrice + " per kg"
@@ -62,7 +60,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
         holder.delete.setOnClickListener {
             val alartDialog = AlertDialog.Builder(ctx)
             alartDialog.setTitle("Delete Product")
-            alartDialog.setMessage("Are You Sure To Remove Product From Cart.")
+            alartDialog.setMessage("Are You Sure To Remove Product From Basket.")
             alartDialog.setPositiveButton(
                 "Yes"
             ) { dialog, which ->
@@ -94,7 +92,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
             for ((i, value) in ctx.resources.getStringArray(R.array.kg_array).withIndex()) {
 
                 if (value.contains(product.selected_quantity_txt.toString())) {
-                    holder.quantity.setSelection(i)
+                    holder.quantity.setSelection(i, false)
                 }
             }
         } else {
@@ -106,7 +104,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
             for ((i, value) in ctx.resources.getStringArray(R.array.kg_bundle).withIndex()) {
 
                 if (value.contains(product.selected_quantity_txt.toString())) {
-                    holder.quantity.setSelection(i)
+                    holder.quantity.setSelection(i, false)
                 }
             }
         }
@@ -155,17 +153,13 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
                             product.selected_quantity = 2.75f
                         } else if (holder.quantity.selectedItem.toString() == "3kg") {
                             product.selected_quantity = 3.00f
-                        } else if (holder.quantity.selectedItem.toString() == "3.25kg") {
-                            product.selected_quantity = 3.25f
-                        } else if (holder.quantity.selectedItem.toString() == "3.5kg") {
-                            product.selected_quantity = 3.50f
-                        } else if (holder.quantity.selectedItem.toString() == "3.75kg") {
-                            product.selected_quantity = 3.75f
                         }
-                    } else if (product.unitOfMeasure == "BUNDLE" || product.unitOfMeasure == "NUMBER") {
-                        product.selected_quantity =
-                                holder.quantity.selectedItem.toString().toFloat()
-                        if (holder.quantity.selectedItem.toString() == "2") {
+                    } else {
+//                        product.selected_quantity =
+//                                holder.quantity.selectedItem.toString().toFloat()
+                        if (holder.quantity.selectedItem.toString() == "1") {
+                            product.selected_quantity = 1f
+                        } else if (holder.quantity.selectedItem.toString() == "2") {
                             product.selected_quantity = 2f
                         } else if (holder.quantity.selectedItem.toString() == "3") {
                             product.selected_quantity = 3f
@@ -190,7 +184,6 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
 //                        old_Quantity = holder.quantity.selectedItem.toString()
                     CoroutineScope(Dispatchers.IO).launch {
                         AppDatabase(ctx).cartDao().updateCart(product)
-
                     }
 
                     ctx.sendBroadcast(Intent("change_quantity"))

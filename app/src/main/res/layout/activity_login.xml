@@ -188,6 +188,7 @@
                 android:layout_marginLeft="5dp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="SignUp"
+                android:onClick="@{data.getSignup}"
                 android:textColor="#ef5037"
                 android:textSize="15sp" />
         </LinearLayout>
