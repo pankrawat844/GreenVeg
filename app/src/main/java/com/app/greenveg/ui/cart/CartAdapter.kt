@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.db.ProductEntity
+import com.app.greenveg.utils.Constants
 import com.app.greenveg.utils.toast
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_cart.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +47,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         var old_Quantity = ""
         val product = list[position]
-//        Picasso.get().load(Constants.imageUrl + product.productImage1).into(holder.img)
+        Picasso.get().load(Constants.imageUrl + product.productImage4).into(holder.img)
         holder.product_name.text = product.productName
         if (product.unitOfMeasure == "KG") {
             holder.product_price.text = "Unit Price: Rs " + product.sellingPrice + " per kg"

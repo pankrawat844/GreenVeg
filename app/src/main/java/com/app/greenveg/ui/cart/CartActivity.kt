@@ -130,7 +130,7 @@ class CartActivity : AppCompatActivity() {
                     }
                 } else {
                     withContext(Dispatchers.Main) {
-                        toast("Basket value is must be greater than 0 for Ordering.")
+                        toast("Please add a item to basket for order.")
                     }
                 }
             }

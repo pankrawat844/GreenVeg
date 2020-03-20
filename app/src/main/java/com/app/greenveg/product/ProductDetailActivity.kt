@@ -40,9 +40,9 @@ class ProductDetailActivity : AppCompatActivity() {
         if (data.productImage3 != "") {
             list?.add(data.productImage3!!)
         }
-        if (data.productImage4 != "") {
-            list?.add(data.productImage4!!)
-        }
+//        if (data.productImage4 != "") {
+//            list?.add(data.productImage4!!)
+//        }
         val viewPagerAdapter = ProductImageViewPage(this, list!!)
         viewPager.adapter = viewPagerAdapter
 
