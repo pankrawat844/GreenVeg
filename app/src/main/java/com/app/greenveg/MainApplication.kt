@@ -11,6 +11,8 @@ import com.app.greenveg.ui.productlist.ProductListModelFactory
 import com.app.greenveg.ui.productlist.ProductListViewModel
 import com.app.greenveg.ui.search.SearchViewModel
 import com.app.greenveg.ui.search.SearchViewModelFactory
+import com.app.greenveg.ui.signup.SignupViewmodel
+import com.app.greenveg.ui.signup.SignupViewmodelFactory
 import com.app.greenveg.utils.MyApi
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -39,7 +41,7 @@ class MainApplication:Application(),KodeinAware {
         }
         bind() from singleton {
             ProductListViewModel(
-                    instance()
+                instance()
             )
         }
 
@@ -48,6 +50,8 @@ class MainApplication:Application(),KodeinAware {
         bind() from singleton { SearchViewModelFactory(instance()) }
         bind() from singleton { LoginViewModel(instance()) }
         bind() from singleton { LoginViewModelFactory(instance()) }
+        bind() from singleton { SignupViewmodel(instance()) }
+        bind() from singleton { SignupViewmodelFactory(instance()) }
     }
 
 }

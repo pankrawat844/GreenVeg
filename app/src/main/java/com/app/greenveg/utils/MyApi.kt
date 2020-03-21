@@ -2,6 +2,7 @@ package com.app.greenveg.utils
 
 import com.app.greenveg.model.Category
 import com.app.greenveg.model.ProductList
+import com.app.greenveg.model.ServiceArea
 import com.app.greenveg.model.User
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -40,13 +41,17 @@ companion object
     @FormUrlEncoded
     @POST("search_product_list.php")
     fun getSearchProductList(
-            @Field("search") cat_id: String
+        @Field("search") cat_id: String
     ): Call<ProductList>
 
     @FormUrlEncoded
     @POST("login_api.php")
     fun getUser(
-            @Field("email") email: String,
-            @Field("password") password: String
+        @Field("email") email: String,
+        @Field("password") password: String
     ): Call<User>
+
+    @GET("service_area.php")
+    fun serviceArea(): Call<ServiceArea>
+
 }
