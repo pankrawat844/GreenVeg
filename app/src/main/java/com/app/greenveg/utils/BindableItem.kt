@@ -17,5 +17,6 @@ class BindableItem {
                 txtView.text = "Rs " + data.sellingPrice + " per bundle"
             }
         }
+
     }
 }

@@ -50,4 +50,7 @@
     <string name="hello_gallery_second">Hello GallerySecondFragment. Arg: %1$s</string>
     <string name="hello_slideshow_second">Hello SlideshowSecondFragment. Arg: %1$s</string>
     <string name="delivery_note">All price are today\'s price. Actual price will be charged on the basis of delivery date price.</string>
+    <string name="verify">Verifying your number!</string>
+    <string name="sent">We have sent an OTP on your number</string>
+    <string name="resend">Resend OTP?</string>
 </resources>

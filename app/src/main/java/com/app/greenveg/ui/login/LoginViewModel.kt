@@ -19,7 +19,7 @@ class LoginViewModel(val repository: Repository) : ViewModel() {
     var password: String? = null
     fun getLogin(view: View) {
         if (email.isNullOrEmpty()) {
-            loginListener?.onFailure("Please enter email id.")
+            loginListener?.onFailure("Please enter username/mobile no.")
             return
         }
         if (password.isNullOrEmpty()) {

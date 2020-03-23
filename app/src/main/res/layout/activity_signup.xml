@@ -1,389 +1,406 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="data"
+            type="com.app.greenveg.ui.signup.SignupViewmodel" />
+
+        <variable
+            name="item"
+            type="com.app.greenveg.utils.Item" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="180dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="25dp"
-            android:src="@drawable/logo" />
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/service_area"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Service Area"
-                    android:inputType="text"
-                    android:padding="5dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
+                <ImageView
+                    android:layout_width="180dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="25dp"
+                    android:src="@drawable/logo" />
 
-                <EditText
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Name"
-                    android:inputType="text"
-                    android:padding="15dp"
-                android:textColor="#c6c6c6"
-                android:textColorHint="#c6c6c6"
-                android:textSize="17sp" />
-
-                <EditText
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="UserName"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rect_gray"
-                android:fontFamily="@font/roboto_regular"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:padding="15dp"
-                android:textColor="#c6c6c6"
-                android:textColorHint="#c6c6c6"
-                android:textSize="17sp" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rect_gray"
-                android:fontFamily="@font/roboto_regular"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="15dp"
-                android:textColor="#c6c6c6"
-                android:textColorHint="#c6c6c6"
-                android:textSize="17sp" />
-
-            <EditText
-                android:id="@+id/confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rect_gray"
-                android:fontFamily="@font/roboto_regular"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:padding="15dp"
-                android:textColor="#c6c6c6"
-                android:textColorHint="#c6c6c6"
-                android:textSize="17sp" />
-
-
-                <EditText
-                    android:id="@+id/mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Mobile"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:id="@+id/alternate_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Alternate Mobile"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:id="@+id/address_line1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Address Line 1"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:id="@+id/address_line2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Address Line 2"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:id="@+id/address_line3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Address Line 3"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:id="@+id/address_line4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Address Line 4"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Address Line 5"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Landmark"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Pincode"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="District"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rect_gray"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="State"
-                    android:inputType="text"
-                    android:padding="15dp"
-                    android:textColor="#c6c6c6"
-                    android:textColorHint="#c6c6c6"
-                    android:textSize="17sp" />
-
-                <EditText
+                <LinearLayout
+                    android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginTop="18dp"
                     android:layout_marginRight="25dp"
-                    android:background="@drawable/rect_orange"
-                    android:fontFamily="@font/sfuitext_regular"
-                    android:gravity="center_horizontal"
-                    android:padding="15dp"
-                    android:text="SIGN UP"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff"
-                    android:textSize="15sp" />
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/service_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Service Area"
+                        android:inputType="text"
+                        android:padding="5dp"
+                        android:selectedItemPosition="@={data.servicearea}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Name*"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.name}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="UserName*"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.username}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:padding="15dp"
+                        android:text="@={data.email}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Password*"
+                        android:inputType="textPassword"
+                        android:padding="15dp"
+                        android:text="@={data.password}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Confirm Password"
+                        android:inputType="textPassword"
+                        android:padding="15dp"
+                        android:text="@={data.confirmedpassword}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+
+                    <EditText
+                        android:id="@+id/mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Mobile*"
+                        android:inputType="number"
+                        android:padding="15dp"
+                        android:text="@={data.mobile}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/alternate_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Alternate Mobile"
+                        android:inputType="number"
+                        android:padding="15dp"
+                        android:text="@={data.alternate_phone}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+
+                    <TextView
+                        android:id="@+id/next"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/rect_orange"
+                        android:fontFamily="@font/sfuitext_regular"
+                        android:gravity="center_horizontal"
+                        android:onClick="@{data::getSignup1}"
+                        android:padding="15dp"
+                        android:text="NEXT"
+                        android:textAllCaps="false"
+                        android:textColor="#fff"
+                        android:textSize="15sp" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Already have an account?"
+                            android:textColor="#4a4a4a"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/sfuitext_regular"
+                            android:text="LogIn"
+                            android:textColor="#ef5037"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:orientation="vertical"
                     android:visibility="gone">
 
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:id="@+id/address_line1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Already have an account?"
-                        android:textColor="#4a4a4a"
-                        android:textSize="15sp" />
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Address Line 1*"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.address_line1}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
 
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:id="@+id/address_line2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Address Line 2*"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.address_line2}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/address_line3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Address Line 3"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.address_line3}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/address_line4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Address Line 4"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.address_line4}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/address_line5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:editable="false"
+                        android:enabled="false"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Address Line 5"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.address_line5}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/landmark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Landmark*"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.landmark}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/pincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Pincode*"
+                        android:inputType="number"
+                        android:padding="15dp"
+                        android:text="@={data.pincode}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/district"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:enabled="false"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="District*"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.district}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_gray"
+                        android:enabled="false"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="State*"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:text="@={data.state}"
+                        android:textColor="#000000"
+                        android:textColorHint="#c6c6c6"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/signup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/rect_orange"
                         android:fontFamily="@font/sfuitext_regular"
-                        android:text="LogIn"
-                        android:textColor="#ef5037"
+                        android:gravity="center_horizontal"
+                        android:onClick="@{data::getSignup2}"
+                        android:padding="15dp"
+                        android:text="SIGN UP"
+                        android:textAllCaps="false"
+                        android:textColor="#fff"
                         android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/back"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/rect_orange"
+                        android:fontFamily="@font/sfuitext_regular"
+                        android:gravity="center_horizontal"
+                        android:onClick="@{data::back}"
+                        android:padding="15dp"
+                        android:text="BACK"
+                        android:textAllCaps="false"
+                        android:textColor="#fff"
+                        android:textSize="15sp" />
+
                 </LinearLayout>
 
-            </LinearLayout>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginRight="25dp"
-            android:fontFamily="@font/sfuitext_regular"
-            android:text="By tap “Sign Up” to agree the"
-            android:textColor="#4a4a4a"
-            android:textSize="12sp"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfuitext_regular"
-                    android:text="Terms of Service"
-                    android:textColor="#4a4a4a"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#4a4a4a" />
 
             </LinearLayout>
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@font/sfuitext_regular"
-                android:text="and"
-                android:textColor="#4a4a4a"
-                android:textSize="12sp"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfuitext_regular"
-                    android:text="Privacy Policy"
-                    android:textColor="#4a4a4a"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#4a4a4a" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-
-        </LinearLayout>
-
-    </RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+    </ScrollView>
+</layout>

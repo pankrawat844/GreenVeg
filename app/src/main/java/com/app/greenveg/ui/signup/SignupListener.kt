@@ -8,4 +8,6 @@ interface SignupListener {
     fun onSuccess(user: User)
     fun onFailure(msg: String)
     fun onServiceAreaSucces(area: ServiceArea)
+    fun onsecondViewVisble()
+    fun onback()
 }

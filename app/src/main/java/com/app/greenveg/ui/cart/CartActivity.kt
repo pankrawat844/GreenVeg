@@ -114,10 +114,18 @@ class CartActivity : AppCompatActivity() {
                         alartDialog.setPositiveButton(
                             "Yes"
                         ) { dialog, which ->
-                            Intent(this@CartActivity, LoginActivity::class.java).also {
-                                startActivity(it)
+                            val sharedPef = getSharedPreferences("greenveg", Context.MODE_PRIVATE)
+                            if (!sharedPef.getBoolean("islogin", false)) {
+                                Intent(this@CartActivity, LoginActivity::class.java).also {
+                                    startActivity(it)
+                                }
+                                dialog.dismiss()
+                            } else {
+                                Intent(this@CartActivity, LoginActivity::class.java).also {
+                                    startActivity(it)
+                                }
+                                dialog.dismiss()
                             }
-                            dialog.dismiss()
                         }
 
                         alartDialog.setNegativeButton(

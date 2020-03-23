@@ -7,6 +7,8 @@ import com.app.greenveg.ui.home.HomeViewModelFactory
 import com.app.greenveg.ui.home.MainActivityViewModel
 import com.app.greenveg.ui.login.LoginViewModel
 import com.app.greenveg.ui.login.LoginViewModelFactory
+import com.app.greenveg.ui.otp.OtpViewModelFactory
+import com.app.greenveg.ui.otp.OtpViewmodel
 import com.app.greenveg.ui.productlist.ProductListModelFactory
 import com.app.greenveg.ui.productlist.ProductListViewModel
 import com.app.greenveg.ui.search.SearchViewModel
@@ -52,6 +54,8 @@ class MainApplication:Application(),KodeinAware {
         bind() from singleton { LoginViewModelFactory(instance()) }
         bind() from singleton { SignupViewmodel(instance()) }
         bind() from singleton { SignupViewmodelFactory(instance()) }
+        bind() from singleton { OtpViewmodel(instance()) }
+        bind() from singleton { OtpViewModelFactory(instance()) }
     }
 
 }

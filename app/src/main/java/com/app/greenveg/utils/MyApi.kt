@@ -1,9 +1,6 @@
 package com.app.greenveg.utils
 
-import com.app.greenveg.model.Category
-import com.app.greenveg.model.ProductList
-import com.app.greenveg.model.ServiceArea
-import com.app.greenveg.model.User
+import com.app.greenveg.model.*
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -53,5 +50,26 @@ companion object
 
     @GET("service_area.php")
     fun serviceArea(): Call<ServiceArea>
+
+    @FormUrlEncoded
+    @POST("signup_api.php")
+    fun getSignup(
+        @Field("name") name: String?,
+        @Field("email") email: String?,
+        @Field("password") password: String?,
+        @Field("username") username: String?,
+        @Field("servicearea") serviceArea: String?,
+        @Field("mobile") mobile: String?,
+        @Field("alternate_phone") alternatemobile: String?,
+        @Field("address_line1") address1: String?,
+        @Field("address_line2") address2: String?,
+        @Field("address_line3") address3: String?,
+        @Field("address_line4") address4: String?,
+        @Field("address_line5") address5: String?,
+        @Field("landmark") landmark: String?,
+        @Field("pincode") pincode: String?,
+        @Field("district") district: String?,
+        @Field("state") state: String?
+    ): Call<Signup>
 
 }
