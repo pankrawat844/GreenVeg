@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.app.greenveg.R
+import com.app.greenveg.ui.forgotpassword.ForgotPassActivity
 import com.app.greenveg.ui.login.LoginActivity
 import com.app.greenveg.utils.Constants
 import com.app.greenveg.utils.toast
@@ -33,24 +34,31 @@ class OtpActivity : AppCompatActivity(), OtpListener, KodeinAware {
         sendSms()
         submit.setOnClickListener {
             if (firstPinView.text.toString() == randomNum.toString()) {
-                viewmodel.getSignup(
-                    intent.getStringExtra("name"),
-                    intent.getStringExtra("email"),
-                    intent.getStringExtra("password"),
-                    intent.getStringExtra("username"),
-                    intent.getStringExtra("serviceArea"),
-                    intent.getStringExtra("mobile"),
-                    intent.getStringExtra("alternatemobile"),
-                    intent.getStringExtra("address1"),
-                    intent.getStringExtra("address2"),
-                    intent.getStringExtra("address3"),
-                    intent.getStringExtra("address4"),
-                    intent.getStringExtra("address5"),
-                    intent.getStringExtra("landmark"),
-                    intent.getStringExtra("pincode"),
-                    intent.getStringExtra("district"),
-                    intent.getStringExtra("state")
-                )
+                if (intent.getStringExtra("activity") == "login") {
+                    Intent(this, ForgotPassActivity::class.java).also {
+                        it.putExtra("mobile", intent.getStringExtra("mobile"))
+                        startActivity(it)
+                    }
+                } else {
+                    viewmodel.getSignup(
+                        intent.getStringExtra("name"),
+                        intent.getStringExtra("email"),
+                        intent.getStringExtra("password"),
+                        intent.getStringExtra("username"),
+                        intent.getStringExtra("serviceArea"),
+                        intent.getStringExtra("mobile"),
+                        intent.getStringExtra("alternatemobile"),
+                        intent.getStringExtra("address1"),
+                        intent.getStringExtra("address2"),
+                        intent.getStringExtra("address3"),
+                        intent.getStringExtra("address4"),
+                        intent.getStringExtra("address5"),
+                        intent.getStringExtra("landmark"),
+                        intent.getStringExtra("pincode"),
+                        intent.getStringExtra("district"),
+                        intent.getStringExtra("state")
+                    )
+                }
             } else {
                 toast("Please enter correct otp.")
 
@@ -60,6 +68,10 @@ class OtpActivity : AppCompatActivity(), OtpListener, KodeinAware {
         resend.setOnClickListener {
             sendSms()
             toast("Please check your inbox.")
+        }
+
+        back.setOnClickListener {
+            onBackPressed()
         }
     }
 
@@ -106,7 +118,7 @@ class OtpActivity : AppCompatActivity(), OtpListener, KodeinAware {
 
     override fun onSuccess(user: String) {
         progressBar.visibility = View.GONE
-        toast(user)
+        toast("Signup Successfully. You can now login in Login Page. ")
         finish()
         Intent(this, LoginActivity::class.java).also {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -119,7 +131,7 @@ class OtpActivity : AppCompatActivity(), OtpListener, KodeinAware {
     override fun onFailure(msg: String) {
         progressBar.visibility = View.GONE
         toast(msg)
-
+//        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     override val kodein by kodein()

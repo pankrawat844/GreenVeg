@@ -84,5 +84,4 @@ dependencies {
     implementation 'com.chaos.view:pinview:1.4.3'
 
 
-
 }

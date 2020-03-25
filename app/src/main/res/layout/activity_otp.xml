@@ -3,8 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient2"
+    android:background="#FFEB3B"
     android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:src="@drawable/logo" />
+
+        <RelativeLayout
+            android:id="@+id/badge_layout1"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="end"
+            android:layout_marginRight="15dp">
+
+            <RelativeLayout
+                android:id="@+id/relative_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="35dip"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ic_baseline_shopping_basket_24"
+                    android:backgroundTint="@color/green"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/cart_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/relative_layout"
+                android:layout_marginRight="-5dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="0"
+                android:textColor="#FFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +84,7 @@
             android:layout_marginTop="50dp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/verify"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +93,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/sent"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
 
         <com.chaos.view.PinView
@@ -39,7 +104,7 @@
             android:cursorVisible="true"
             android:inputType="number"
             android:padding="5dp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:cursorColor="@color/green"
@@ -62,14 +127,14 @@
             android:layout_marginTop="40dp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/resend"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="35dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="38dp"
             android:layout_marginRight="35dp"
             android:background="@drawable/rect_orange"
             android:fontFamily="@font/sfuitext_regular"

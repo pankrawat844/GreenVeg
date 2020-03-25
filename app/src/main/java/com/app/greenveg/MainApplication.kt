@@ -2,6 +2,10 @@ package com.app.greenveg
 
 import android.app.Application
 import com.app.greenveg.repo.Repository
+import com.app.greenveg.ui.cart.CartViewmodel
+import com.app.greenveg.ui.cart.CartViewmodelFactory
+import com.app.greenveg.ui.forgotpassword.ForgotPasswordModelFactory
+import com.app.greenveg.ui.forgotpassword.ForgotViewmodel
 import com.app.greenveg.ui.home.HomeFragment
 import com.app.greenveg.ui.home.HomeViewModelFactory
 import com.app.greenveg.ui.home.MainActivityViewModel
@@ -56,6 +60,10 @@ class MainApplication:Application(),KodeinAware {
         bind() from singleton { SignupViewmodelFactory(instance()) }
         bind() from singleton { OtpViewmodel(instance()) }
         bind() from singleton { OtpViewModelFactory(instance()) }
+        bind() from singleton { ForgotPasswordModelFactory(instance()) }
+        bind() from singleton { ForgotViewmodel(instance()) }
+        bind() from singleton { CartViewmodel(instance()) }
+        bind() from singleton { CartViewmodelFactory(instance()) }
     }
 
 }

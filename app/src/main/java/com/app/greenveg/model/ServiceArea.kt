@@ -9,7 +9,7 @@ data class ServiceArea(
     @SerializedName("message")
     val message: String,
     @SerializedName("response")
-    val response: List<Response>,
+    val response: ArrayList<Response>,
     @SerializedName("success")
     val success: Boolean
 ) {

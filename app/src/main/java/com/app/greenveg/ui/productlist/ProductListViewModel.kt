@@ -21,7 +21,7 @@ fun getProductList(cat:Int){
             repository.getProductList(cat).enqueue(object :
                 Callback<ProductList> {
                 override fun onFailure(call: Call<ProductList>, t: Throwable) {
-                    t.printStackTrace()
+                    productLisetner?.onFailure(t.message!!)
                 }
 
                 override fun onResponse(

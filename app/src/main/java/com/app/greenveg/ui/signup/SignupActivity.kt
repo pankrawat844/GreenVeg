@@ -1,6 +1,7 @@
 package com.app.greenveg.ui.signup
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -20,10 +21,11 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
+
 class SignupActivity : AppCompatActivity(), KodeinAware, SignupListener {
     val factory: SignupViewmodelFactory by instance()
     var databind: ActivitySignupBinding? = null
-    var serviceAreaList: List<String>? = null
+    var serviceAreaList: ArrayList<String>? = null
     var viewmodel: SignupViewmodel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,16 @@ class SignupActivity : AppCompatActivity(), KodeinAware, SignupListener {
         viewmodel?.signupListene = this
         databind?.data = viewmodel
         databind?.item = Item()
+        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+            for (i in start until end) {
+                if (Character.isWhitespace(source[i])) {
+                    return@InputFilter ""
+                }
+            }
+            null
+        }
+        username.filters = arrayOf(filter)
+        password.filters = arrayOf(filter)
 //        viewmodel.servicearea=serviceAreaList?.get(databind?.item?.selectedItemPosition!!)
         service_area.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -73,6 +85,7 @@ class SignupActivity : AppCompatActivity(), KodeinAware, SignupListener {
             android.R.layout.simple_spinner_dropdown_item,
             serviceAreaList!!
         )
+        serviceAreaList?.add(0, "Select Service Area")
         viewmodel?.serviceareaList = serviceAreaList
     }
 
@@ -87,8 +100,8 @@ class SignupActivity : AppCompatActivity(), KodeinAware, SignupListener {
     }
 }
 
-private fun List<ServiceArea.Response>.getName(): List<String> {
+private fun ArrayList<ServiceArea.Response>.getName(): ArrayList<String> {
     return this.map {
         it.areaName
-    }
+    } as ArrayList<String>
 }

@@ -56,7 +56,9 @@ data class User(
             @SerializedName("user_status")
             val userStatus: String,
             @SerializedName("userid")
-            val userid: String
+            val userid: String,
+            @SerializedName("landmark")
+            val landmark: String
         )
     }
 }

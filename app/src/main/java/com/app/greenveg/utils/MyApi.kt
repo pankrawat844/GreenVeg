@@ -2,14 +2,12 @@ package com.app.greenveg.utils
 
 import com.app.greenveg.model.*
 import com.google.gson.GsonBuilder
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface MyApi {
 companion object
@@ -54,22 +52,38 @@ companion object
     @FormUrlEncoded
     @POST("signup_api.php")
     fun getSignup(
-        @Field("name") name: String?,
-        @Field("email") email: String?,
-        @Field("password") password: String?,
-        @Field("username") username: String?,
-        @Field("servicearea") serviceArea: String?,
-        @Field("mobile") mobile: String?,
-        @Field("alternate_phone") alternatemobile: String?,
-        @Field("address_line1") address1: String?,
-        @Field("address_line2") address2: String?,
-        @Field("address_line3") address3: String?,
-        @Field("address_line4") address4: String?,
-        @Field("address_line5") address5: String?,
-        @Field("landmark") landmark: String?,
-        @Field("pincode") pincode: String?,
-        @Field("district") district: String?,
-        @Field("state") state: String?
+            @Field("name") name: String?,
+            @Field("email") email: String?,
+            @Field("password") password: String?,
+            @Field("username") username: String?,
+            @Field("servicearea") serviceArea: String?,
+            @Field("mobile") mobile: String?,
+            @Field("alternate_phone") alternatemobile: String?,
+            @Field("address_line1") address1: String?,
+            @Field("address_line2") address2: String?,
+            @Field("address_line3") address3: String?,
+            @Field("address_line4") address4: String?,
+            @Field("address_line5") address5: String?,
+            @Field("landmark") landmark: String?,
+            @Field("pincode") pincode: String?,
+            @Field("district") district: String?,
+            @Field("state") state: String?
     ): Call<Signup>
 
+    @FormUrlEncoded
+    @POST("forgotpassword_api.php")
+    fun changePassord(
+            @Field("mobile") mobile: String?,
+            @Field("password") password: String?
+    ): Call<Signup>
+
+    @FormUrlEncoded
+    @POST("checkuser_api.php")
+    fun checkuser(
+            @Field("mobile") mobile: String?): Call<Signup>
+
+    @Headers("Content-Type:application/json")
+    @POST("order_api.php")
+    fun addtoCart(
+            @Body data: RequestBody?): Call<Signup>
 }

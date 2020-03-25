@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:background="#FFEB3B">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,6 +114,7 @@
                 android:layout_marginRight="5dp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="Forgot password?"
+                android:onClick="@{data::changePass}"
                 android:textColor="#ef5037"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -194,6 +195,12 @@
         </LinearLayout>
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </layout>

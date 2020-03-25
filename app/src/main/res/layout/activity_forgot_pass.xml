@@ -5,13 +5,13 @@
 
         <variable
             name="data"
-            type="com.app.greenveg.ui.login.LoginViewModel" />
+            type="com.app.greenveg.ui.forgotpassword.ForgotViewmodel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:background="#FFEB3B">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,9 +50,9 @@
                     android:background="#00000000"
                     android:fontFamily="@font/sfuitext_regular"
                     android:hint="New Password"
-                    android:inputType="text"
+                    android:inputType="textPassword"
                     android:padding="8dp"
-                    android:text="@={data.email}"
+                    android:text="@={data.password}"
                     android:textColor="#000000"
                     android:textColorHint="#c6c6c6" />
             </LinearLayout>
@@ -78,9 +78,9 @@
                     android:background="#00000000"
                     android:fontFamily="@font/sfuitext_regular"
                     android:hint="Confirm Password"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:padding="8dp"
-                    android:text="@={data.password}"
+                    android:text="@={data.confirmpassword}"
                     android:textColor="#000000"
                     android:textColorHint="#c6c6c6" />
             </LinearLayout>
@@ -94,15 +94,22 @@
                 android:background="@drawable/rect_orange"
                 android:fontFamily="@font/sfuitext_regular"
                 android:gravity="center_horizontal"
-                android:onClick="@{data.getLogin}"
                 android:padding="15dp"
                 android:text="CHANGE"
+                android:onClick="@{data::changePassword}"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
 
         </LinearLayout>
 
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </layout>

@@ -8,7 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.telephony.TelephonyManager
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.greenveg.R
@@ -20,18 +23,26 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CartActivity : AppCompatActivity() {
+class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
+    val factory: CartViewmodelFactory by instance()
     var total: Float? = 0.00f
 
     var adapter: CartAdapter? = null
+    var viewmodel: CartViewmodel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
-
+        viewmodel = ViewModelProviders.of(this, factory).get(CartViewmodel::class.java)
+        viewmodel?.cartListener = this
         CoroutineScope(Dispatchers.IO).launch {
             val cart = AppDatabase(this@CartActivity).cartDao().getCartProduct()
             var itemTotal: Int? = AppDatabase(this@CartActivity).cartDao().getCartProduct().size
@@ -104,7 +115,9 @@ class CartActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch {
 
                 var itemTotal: Int? =
-                    AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+                        AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+                var items =
+                        AppDatabase(this@CartActivity).cartDao().getCartProduct()
 
                 if (itemTotal!! > 0) {
                     withContext(Dispatchers.Main) {
@@ -112,7 +125,7 @@ class CartActivity : AppCompatActivity() {
                         alartDialog.setTitle("Confirm Order")
                         alartDialog.setMessage("Are You Sure To Confirm This Order.")
                         alartDialog.setPositiveButton(
-                            "Yes"
+                                "Yes"
                         ) { dialog, which ->
                             val sharedPef = getSharedPreferences("greenveg", Context.MODE_PRIVATE)
                             if (!sharedPef.getBoolean("islogin", false)) {
@@ -121,9 +134,37 @@ class CartActivity : AppCompatActivity() {
                                 }
                                 dialog.dismiss()
                             } else {
-                                Intent(this@CartActivity, LoginActivity::class.java).also {
-                                    startActivity(it)
+                                val array = JSONArray()
+                                for (item in items) {
+                                    val product_total = item.sellingPrice?.toInt()
+                                            ?.times(item.selected_quantity.toFloat())!!
+                                    val jsonObject = JSONObject()
+                                    jsonObject.put("user_id", getSharedPreferences("greenveg",
+                                            Context.MODE_PRIVATE).getString("userid", ""))
+                                    jsonObject.put("username", getSharedPreferences("greenveg",
+                                            Context.MODE_PRIVATE).getString("name", ""))
+                                    getSharedPreferences("greenveg",
+                                            Context.MODE_PRIVATE).getString("name", "")
+                                    jsonObject.put("delivery_date", delivery_date.text.toString())
+                                    jsonObject.put("product_id", item.productId)
+                                    jsonObject.put("product_name", item.productName)
+                                    jsonObject.put("product_quantity", item.selected_quantity.toString())
+                                    jsonObject.put("product_unit_rate", item.sellingPrice)
+                                    jsonObject.put("product_price", item.sellingPrice)
+                                    jsonObject.put("product_total", product_total.toString())
+                                    jsonObject.put("order_total", total.toString())
+                                    val telephonyManager = getSystemService(
+                                            Context.TELEPHONY_SERVICE
+                                    ) as TelephonyManager
+
+                                    jsonObject.put("device_id", telephonyManager.manufacturerCode)
+                                    array.put(jsonObject)
                                 }
+
+//                                Intent(this@CartActivity, LoginActivity::class.java).also {
+//                                    startActivity(it)
+//                                }
+                                viewmodel?.getCart(array)
                                 dialog.dismiss()
                             }
                         }
@@ -199,4 +240,22 @@ class CartActivity : AppCompatActivity() {
         super.onStop()
         unregisterReceiver(broadcastReceiver)
     }
+
+    override fun onStarted() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun onSuccess(user: String) {
+        progressBar.visibility = View.GONE
+
+        toast(user)
+    }
+
+    override fun onFailure(msg: String) {
+        progressBar.visibility = View.GONE
+        toast(msg)
+
+    }
+
+    override val kodein by kodein()
 }
