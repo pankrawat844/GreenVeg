@@ -46,9 +46,9 @@ class ProductListFragment : Fragment(),
     }
 
     override fun onSuccess(productList: ProductList) {
-        Log.e("response",productList.toString())
-        product_recylerview.layoutManager=LinearLayoutManager(activity)
-        product_recylerview.adapter=ProductAdapter(activity!!,productList.response!!)
+        Log.e("response", productList.toString())
+        product_recylerview?.layoutManager = LinearLayoutManager(activity)
+        product_recylerview?.adapter = ProductAdapter(activity!!, productList.response!!)
     }
 
     override fun onFailure(msg: String) {

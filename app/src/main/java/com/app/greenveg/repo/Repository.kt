@@ -2,6 +2,8 @@ package com.app.greenveg.repo
 
 import com.app.greenveg.SafeApiRequest
 import com.app.greenveg.model.*
+import com.app.greenveg.ui.history.HistoryData
+import com.app.greenveg.ui.history.HistoryDetailItem
 import com.app.greenveg.utils.MyApi
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -59,13 +61,54 @@ class Repository(val myApi: MyApi):SafeApiRequest() {
             alternatemobile,
             address1,
                 address2,
-                address3,
-                address4,
-                address5,
-                landmark,
-                pincode,
-                district,
-                state
+            address3,
+            address4,
+            address5,
+            landmark,
+            pincode,
+            district,
+            state
+        )
+    }
+
+
+    fun updateProfile(
+        userId: String,
+        name: String?,
+        email: String?,
+        password: String?,
+        username: String?,
+        serviceArea: String?,
+        mobile: String?,
+        alternatemobile: String?,
+        address1: String?,
+        address2: String?,
+        address3: String?,
+        address4: String?,
+        address5: String?,
+        landmark: String?,
+        pincode: String?,
+        district: String?,
+        state: String?
+    ): Call<Signup> {
+        return myApi.updateProfile(
+            userId,
+            name,
+            email,
+            password,
+            username,
+            serviceArea,
+            mobile,
+            alternatemobile,
+            address1,
+            address2,
+            address3,
+            address4,
+            address5,
+            landmark,
+            pincode,
+            district,
+            state
         )
     }
 
@@ -79,7 +122,19 @@ class Repository(val myApi: MyApi):SafeApiRequest() {
 
     fun addtoCart(data: JSONArray?): Call<Signup> {
         val body: RequestBody = data.toString()
-                .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         return myApi.addtoCart(body)
+    }
+
+    fun getHistory(userId: String): Call<HistoryData> {
+        return myApi.history(userId)
+    }
+
+    fun getHistoryDetail(orderId: String): Call<HistoryDetailItem> {
+        return myApi.historyDetail(orderId)
+    }
+
+    fun cancelOrder(orderId: String): Call<Signup> {
+        return myApi.cancelOrder(orderId)
     }
 }

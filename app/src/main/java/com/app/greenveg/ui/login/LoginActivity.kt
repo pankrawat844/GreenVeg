@@ -23,7 +23,8 @@ class LoginActivity : AppCompatActivity(), LoginListener, KodeinAware {
     val factory: LoginViewModelFactory by instance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val databinding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        val databinding: ActivityLoginBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_login)
         val viewModel = ViewModelProviders.of(this, factory).get(LoginViewModel::class.java)
         viewModel.loginListener = this
         databinding.data = viewModel
@@ -35,7 +36,7 @@ class LoginActivity : AppCompatActivity(), LoginListener, KodeinAware {
 
     override fun onSuccess(user: User) {
         progressBar.visibility = View.GONE
-        toast("Login Successfull")
+        toast("Login Successfull. Now place order through basket.")
         val sharedPreferences = getSharedPreferences("greenveg", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit {
             putBoolean("islogin", true)

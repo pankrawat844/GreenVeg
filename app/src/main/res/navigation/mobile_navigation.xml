@@ -10,32 +10,30 @@
         android:name="com.app.greenveg.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
-
-
-    </fragment>
-    <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.app.greenveg.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
         <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/history" />
 
-        <argument
-            android:name="myArg"
-            app:argType="string" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.app.greenveg.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/history"
+        android:name="com.app.greenveg.ui.history.HistoryActivity"
+        android:label="My Orders"
+        tools:layout="@layout/activity_history">
+        <action
+            android:id="@+id/action_firstFragment_to_thirdFragment"
+            app:destination="@id/profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.app.greenveg.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/profile_fragment" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.app.greenveg.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/contact"
+        android:name="com.app.greenveg.ui.contactus.ContactUsFragment"
+        android:label="Contact"
+        tools:layout="@layout/fragment_contact_us" />
 </navigation>

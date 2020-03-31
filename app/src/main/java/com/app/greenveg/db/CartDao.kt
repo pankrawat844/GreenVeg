@@ -16,4 +16,7 @@ interface CartDao {
 
     @Delete
     fun deleteFromCart(item: ProductEntity)
+
+    @Query("DELETE FROM Product")
+    fun deleteAll()
 }

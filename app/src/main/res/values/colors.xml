@@ -10,4 +10,6 @@
     <color name="tab_background_selected">#F44336</color>
     <color name="tab_background_unselected">#F3A162</color>
     <color name="white">#FFFFFF</color>
+    <color name="mainTextColor">#282A2C</color>
+    <color name="subTextColor">#908484</color>
 </resources>

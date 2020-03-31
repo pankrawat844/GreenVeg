@@ -93,7 +93,7 @@ class SignupViewmodel(val repository: Repository) : ViewModel() {
             return
         }
 
-        if (password?.length!! < 6 && mobile?.length!! > 10) {
+        if (password?.length!! < 6 || password?.length!! > 10) {
 //            Toast.makeText(view.context, "Please enter 10 digit Mobile No.", Toast.LENGTH_LONG).show()
             signupListene?.onFailure("Password would be minimum 6 and maximum 10 character having at least one letter and one number.")
             return

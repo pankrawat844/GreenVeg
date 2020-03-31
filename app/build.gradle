@@ -82,6 +82,11 @@ dependencies {
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.chaos.view:pinview:1.4.3'
+    implementation "com.xwray:groupie:2.7.0"
+//    implementation "com.xwray:groupie-kotlin-android-extensions:2.7.0"
+    implementation "com.xwray:groupie-databinding:2.7.0"
+
+
 
 
 }

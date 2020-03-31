@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.app.greenveg.R
 import com.app.greenveg.databinding.ActivitySignupBinding
 import com.app.greenveg.model.ServiceArea
-import com.app.greenveg.model.User
 import com.app.greenveg.utils.Item
 import com.app.greenveg.utils.toast
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -70,7 +69,7 @@ class SignupActivity : AppCompatActivity(), KodeinAware, SignupListener {
 
     }
 
-    override fun onSuccess(user: User) {
+    override fun onSuccess(user: String) {
 
     }
 

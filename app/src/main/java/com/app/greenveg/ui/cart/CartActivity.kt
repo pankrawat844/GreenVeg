@@ -1,5 +1,6 @@
 package com.app.greenveg.ui.cart
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -8,12 +9,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.telephony.TelephonyManager
+import android.provider.Settings
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.app.greenveg.NavigationActivity
 import com.app.greenveg.R
 import com.app.greenveg.db.AppDatabase
 import com.app.greenveg.ui.login.LoginActivity
@@ -38,6 +40,8 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
 
     var adapter: CartAdapter? = null
     var viewmodel: CartViewmodel? = null
+
+    @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -48,8 +52,9 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
             var itemTotal: Int? = AppDatabase(this@CartActivity).cartDao().getCartProduct().size
             withContext(Dispatchers.Main) {
                 for (i in cart) {
+
                     total =
-                            total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity.toFloat())!!
+                        total!! + i.sellingPrice?.toInt()?.times(i.selected_quantity.toFloat())!!
 
                 }
                 cart_total.text = total!!.toString()
@@ -61,10 +66,24 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
             }
         }
         val mcurrentDate: Calendar = Calendar.getInstance()
-        val mYear: Int = mcurrentDate.get(Calendar.YEAR)
-        val mMonth: Int = mcurrentDate.get(Calendar.MONTH)
-        val mDay: Int = mcurrentDate.get(Calendar.DAY_OF_MONTH)
-        delivery_date.text = (mDay + 1).toString() + "/" + (mMonth + 1).toString() + "/" + mYear
+        val sdf = SimpleDateFormat(
+            "dd/MM/yyyy",
+            Locale.US
+        )
+        home.setOnClickListener {
+            Intent(this@CartActivity, NavigationActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(it)
+
+
+            }
+        }
+        mcurrentDate.add(Calendar.DAY_OF_MONTH, 1)
+
+        val time = sdf.parse(sdf.format(mcurrentDate.time))
+
+
+        delivery_date.text = sdf.format(mcurrentDate.time)
 
         delivery_date.setOnClickListener {
             val mcurrentDate: Calendar = Calendar.getInstance()
@@ -115,9 +134,9 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
             CoroutineScope(Dispatchers.IO).launch {
 
                 var itemTotal: Int? =
-                        AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+                    AppDatabase(this@CartActivity).cartDao().getCartProduct().size
                 var items =
-                        AppDatabase(this@CartActivity).cartDao().getCartProduct()
+                    AppDatabase(this@CartActivity).cartDao().getCartProduct()
 
                 if (itemTotal!! > 0) {
                     withContext(Dispatchers.Main) {
@@ -125,7 +144,7 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
                         alartDialog.setTitle("Confirm Order")
                         alartDialog.setMessage("Are You Sure To Confirm This Order.")
                         alartDialog.setPositiveButton(
-                                "Yes"
+                            "Yes"
                         ) { dialog, which ->
                             val sharedPef = getSharedPreferences("greenveg", Context.MODE_PRIVATE)
                             if (!sharedPef.getBoolean("islogin", false)) {
@@ -134,30 +153,54 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
                                 }
                                 dialog.dismiss()
                             } else {
+
+                                val delivery_date_txt = delivery_date.text.toString()
+                                val simpledate1 = SimpleDateFormat("dd/MM/yyyy")
+                                val simpledate2 = SimpleDateFormat("MM/dd/yyyy")
+                                val convert_date = simpledate1.parse(delivery_date_txt)
+
                                 val array = JSONArray()
                                 for (item in items) {
                                     val product_total = item.sellingPrice?.toInt()
-                                            ?.times(item.selected_quantity.toFloat())!!
+                                        ?.times(item.selected_quantity.toFloat())!!
                                     val jsonObject = JSONObject()
-                                    jsonObject.put("user_id", getSharedPreferences("greenveg",
-                                            Context.MODE_PRIVATE).getString("userid", ""))
-                                    jsonObject.put("username", getSharedPreferences("greenveg",
-                                            Context.MODE_PRIVATE).getString("name", ""))
-                                    getSharedPreferences("greenveg",
-                                            Context.MODE_PRIVATE).getString("name", "")
-                                    jsonObject.put("delivery_date", delivery_date.text.toString())
+                                    jsonObject.put(
+                                        "user_id", getSharedPreferences(
+                                            "greenveg",
+                                            Context.MODE_PRIVATE
+                                        ).getString("userid", "")
+                                    )
+                                    jsonObject.put(
+                                        "username", getSharedPreferences(
+                                            "greenveg",
+                                            Context.MODE_PRIVATE
+                                        ).getString("name", "")
+                                    )
+                                    getSharedPreferences(
+                                        "greenveg",
+                                        Context.MODE_PRIVATE
+                                    ).getString("name", "")
+                                    jsonObject.put(
+                                        "delivery_date",
+                                        simpledate2.format(convert_date!!)
+                                    )
                                     jsonObject.put("product_id", item.productId)
                                     jsonObject.put("product_name", item.productName)
-                                    jsonObject.put("product_quantity", item.selected_quantity.toString())
+                                    jsonObject.put(
+                                        "product_quantity",
+                                        item.selected_quantity.toString()
+                                    )
                                     jsonObject.put("product_unit_rate", item.sellingPrice)
                                     jsonObject.put("product_price", item.sellingPrice)
                                     jsonObject.put("product_total", product_total.toString())
                                     jsonObject.put("order_total", total.toString())
-                                    val telephonyManager = getSystemService(
-                                            Context.TELEPHONY_SERVICE
-                                    ) as TelephonyManager
+                                    jsonObject.put("unit_of_measure", item.unitOfMeasure)
+                                    val telephonyManager = Settings.Secure.getString(
+                                        contentResolver,
+                                        Settings.Secure.ANDROID_ID
+                                    )
 
-                                    jsonObject.put("device_id", telephonyManager.manufacturerCode)
+                                    jsonObject.put("device_id", telephonyManager)
                                     array.put(jsonObject)
                                 }
 
@@ -248,7 +291,27 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
     override fun onSuccess(user: String) {
         progressBar.visibility = View.GONE
 
-        toast(user)
+//        toast(user)
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Order Placed")
+        alertDialog.setMessage(user)
+//        val factory = LayoutInflater.from(this@CartActivity)
+//        val view: View = factory.inflate(R.layout.dialog_view, null)
+//        alertDialog.setView(view)
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("OK") { dialog, which ->
+            dialog.dismiss()
+            CoroutineScope(Dispatchers.IO).launch {
+                AppDatabase(this@CartActivity).cartDao().deleteAll()
+            }
+            Intent(this, NavigationActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                it.putExtra("from_cart", true)
+                startActivity(it)
+
+            }
+        }
+        alertDialog.create().show()
     }
 
     override fun onFailure(msg: String) {

@@ -22,7 +22,7 @@ class MainActivityViewModel(val repository: Repository) : ViewModel()
                     homeListener?.onStarted()
                           repository.getCatList().enqueue(object :Callback<Category>{
                              override fun onFailure(call: Call<Category>, t: Throwable) {
-
+                                homeListener?.onFailour(t.message!!)
                              }
 
                              override fun onResponse(

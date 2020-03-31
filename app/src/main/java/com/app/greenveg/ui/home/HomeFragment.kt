@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -85,25 +84,29 @@ class HomeFragment : Fragment(), HomeListener, KodeinAware {
     }
 
     override fun onSuccess(response: List<Category.Response>) {
-        mainProgress.visibility = View.GONE
+        mainProgress?.visibility = View.GONE
         Log.e("TAG", "onSuccess: " + response.toString())
         pagerAdapter = MyViewPagerAdapter(childFragmentManager)
         for (i in response.iterator()) {
             val fragment =
-                    ProductListFragment()
+                ProductListFragment()
             val bundle = Bundle()
             bundle.putString("cat_id", i.cid)
             bundle.putString("cat_name", i.categoryName)
             fragment.arguments = bundle
             pagerAdapter?.addFragment(fragment, i.categoryName!!)
         }
-        viewpager1.adapter = pagerAdapter
-        tablayout1.setupWithViewPager(viewpager1, true)
+        viewpager1?.adapter = pagerAdapter
+        tablayout1?.setupWithViewPager(viewpager1, true)
     }
 
     override fun onFailour(msg: String) {
         mainProgress.visibility = View.GONE
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+        if (msg.contains("Unable to resolve host")) {
+            activity?.toast("Please check your internet connection. Try again. ")
+        } else
+            activity?.toast(msg)
+
     }
 
     override val kodein: Kodein by kodein()
