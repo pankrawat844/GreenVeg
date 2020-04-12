@@ -12,15 +12,22 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/logo_low"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo"
+        android:networkSecurityConfig="@xml/network"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.history.HistoryDetailActivity"></activity>
-        <activity android:name=".ui.history.HistoryActivity" />
-        <activity android:name=".ui.forgotpassword.ForgotPassActivity" />
-        <activity android:name=".ui.deliverydetail.DeliveryDetailActivity" />
+        android:roundIcon="@drawable/logo_low"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.history.HistoryDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.forgotpassword.ForgotPassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.deliverydetail.DeliveryDetailActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.otp.OtpActivity" />
         <activity android:name=".ui.signup.SignupActivity" />
         <activity android:name=".ui.search.SearchActivity" />

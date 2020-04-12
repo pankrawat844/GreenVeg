@@ -125,6 +125,8 @@ class HistoryDetailActivity : AppCompatActivity(), KodeinAware, HistoryListener 
         if (data.orderStatus.equals("active", false)) {
             cancelOrder.visibility = View.VISIBLE
 
+        } else if (data.orderStatus.equals("delivered", false)) {
+            status.setTextColor(Color.GREEN)
         } else {
             status.setTextColor(Color.RED)
         }
@@ -134,6 +136,27 @@ class HistoryDetailActivity : AppCompatActivity(), KodeinAware, HistoryListener 
         }
         detailRecylerview.layoutManager = LinearLayoutManager(this)
         detailRecylerview.adapter = adapter
+    }
+
+    override fun onSuccessDelivery(response: HistoryDetailItem) {
+        progressBar.visibility = View.GONE
+
+        if (!response.data.response.isEmpty()) {
+            deliveryDetailtxt.visibility = View.VISIBLE
+            footer_delivery.visibility = View.VISIBLE
+            recyelrviewLayout.visibility = View.VISIBLE
+            val data = response.data.response[0]
+
+            orderTotal1.text = "Rs. " + data.orderTotal
+            noItem1.text = response.data.response.size.toString()
+
+            val adapter = GroupAdapter<GroupieViewHolder>().apply {
+
+                addAll(response.data.response.changeAdapter())
+            }
+            detailRecylerview1.layoutManager = LinearLayoutManager(this)
+            detailRecylerview1.adapter = adapter
+        }
     }
 
     override fun onSuccessCancel(response: Signup) {

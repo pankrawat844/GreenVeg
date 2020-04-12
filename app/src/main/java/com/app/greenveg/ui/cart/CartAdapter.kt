@@ -46,6 +46,7 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         var old_Quantity = ""
+        holder.setIsRecyclable(false)
         val product = list[position]
         Picasso.get().load(Constants.imageUrl + product.productImage4).into(holder.img)
         holder.product_name.text = product.productName
@@ -187,11 +188,17 @@ class CartAdapter(val ctx: Context, val list: List<ProductEntity>) :
                     CoroutineScope(Dispatchers.IO).launch {
                         AppDatabase(ctx).cartDao().updateCart(product)
                     }
-
-                    ctx.sendBroadcast(Intent("change_quantity"))
+                    val intent = Intent("change_quantity").also {
+                        it.putExtra("position", list.indexOf(product))
+                    }
+                    ctx.sendBroadcast(intent)
 
                 }
 
             })
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 }

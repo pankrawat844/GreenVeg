@@ -35,6 +35,7 @@ class HistoryViewmodel(val repository: Repository) : ViewModel() {
     }
 
     fun getHistoryDetail(orderid: String) {
+        historyListener?.onStarted()
         repository.getHistoryDetail(orderid).enqueue(object : Callback<HistoryDetailItem> {
             override fun onFailure(call: Call<HistoryDetailItem>, t: Throwable) {
                 historyListener?.onFailour(t.message!!)
@@ -47,6 +48,32 @@ class HistoryViewmodel(val repository: Repository) : ViewModel() {
                 if (response.isSuccessful) {
                     if (response.body()?.data?.success!!) {
                         historyListener?.onSuccessDetail(response.body()!!)
+                        getDeliveryDetail(orderid)
+                    } else {
+                        historyListener?.onFailour("Something went wrong, try again.")
+                    }
+                }
+            }
+
+        })
+    }
+
+    fun getDeliveryDetail(orderid: String) {
+        historyListener?.onStarted()
+        repository.getDeliveryDetail(orderid).enqueue(object : Callback<HistoryDetailItem> {
+            override fun onFailure(call: Call<HistoryDetailItem>, t: Throwable) {
+                historyListener?.onFailour(t.message!!)
+            }
+
+            override fun onResponse(
+                call: Call<HistoryDetailItem>,
+                response: Response<HistoryDetailItem>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.body()?.data?.success!!) {
+                        historyListener?.onSuccessDelivery(response.body()!!)
+                    } else {
+                        historyListener?.onFailour("Something went wrong, try again.")
                     }
                 }
             }

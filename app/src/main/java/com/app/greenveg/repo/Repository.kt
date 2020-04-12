@@ -134,6 +134,10 @@ class Repository(val myApi: MyApi):SafeApiRequest() {
         return myApi.historyDetail(orderId)
     }
 
+    fun getDeliveryDetail(orderId: String): Call<HistoryDetailItem> {
+        return myApi.deliveryDetail(orderId)
+    }
+
     fun cancelOrder(orderId: String): Call<Signup> {
         return myApi.cancelOrder(orderId)
     }

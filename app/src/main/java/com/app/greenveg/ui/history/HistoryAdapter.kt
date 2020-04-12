@@ -14,6 +14,9 @@ class HistoryAdapter(val item: HistoryItem) :
         if (item.orderStatus.equals("cancelled", ignoreCase = false)) {
             viewHolder.status.setTextColor(Color.RED)
         }
+        if (item.orderStatus.equals("delivered", ignoreCase = false)) {
+            viewHolder.status.setTextColor(Color.GREEN)
+        }
     }
 
 }

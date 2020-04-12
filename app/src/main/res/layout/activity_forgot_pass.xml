@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFEB3B">
+        android:background="#58E8E8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,6 +27,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
+
                 android:src="@drawable/logo" />
 
             <LinearLayout
@@ -52,6 +53,7 @@
                     android:hint="New Password"
                     android:inputType="textPassword"
                     android:padding="8dp"
+                    android:maxLength="10"
                     android:text="@={data.password}"
                     android:textColor="#000000"
                     android:textColorHint="#c6c6c6" />
@@ -80,6 +82,7 @@
                     android:hint="Confirm Password"
                     android:inputType="text"
                     android:padding="8dp"
+                    android:maxLength="10"
                     android:text="@={data.confirmpassword}"
                     android:textColor="#000000"
                     android:textColorHint="#c6c6c6" />

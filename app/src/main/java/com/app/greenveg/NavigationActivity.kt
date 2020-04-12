@@ -63,10 +63,11 @@ class NavigationActivity : AppCompatActivity() {
         if (!getSharedPreferences("greenveg", Context.MODE_PRIVATE).getBoolean("islogin", false)) {
             navView.menu.getItem(1).isVisible = false
             navView.menu.getItem(2).isVisible = false
-            navView.menu.getItem(3).isVisible = false
-            navView.menu.getItem(4).isVisible = true
+            navView.menu.getItem(6).isVisible = false
+            navView.menu.getItem(5).isVisible = true
+            navView.menu.getItem(0).isChecked = true
         } else {
-            navView.menu.getItem(4).isVisible = false
+            navView.menu.getItem(5).isVisible = false
         }
         if (intent.getBooleanExtra("from_cart", false)) {
             navController.navigate(R.id.action_firstFragment_to_secondFragment)
@@ -82,14 +83,26 @@ class NavigationActivity : AppCompatActivity() {
                 }
 
             })
-//        navView.menu.findItem(R.id.profile).setOnMenuItemClickListener {
-//            object:MenuItem.OnMenuItemClickListener{
-//                override fun onMenuItemClick(item: MenuItem?): Boolean {
-//
-//                    return true
-//                }
-//            }
-//        }
+        navView.menu.findItem(R.id.payment).setOnMenuItemClickListener(
+            object : MenuItem.OnMenuItemClickListener {
+                override fun onMenuItemClick(item: MenuItem?): Boolean {
+                    val alertDialog = AlertDialog.Builder(this@NavigationActivity)
+                    alertDialog.setTitle("Payment")
+                    alertDialog.setMessage("We receive Cash on Delivery. We accept all Debit/Credit Cards, Paytm, Google Pay, PhonePe, BHIM UPI.")
+                    alertDialog.setPositiveButton(
+                        "OK",
+                        DialogInterface.OnClickListener { dialog, which ->
+
+                            dialog.dismiss()
+
+                        })
+
+                    alertDialog.create().show()
+                    drawerLayout.closeDrawers()
+                    return false
+                }
+            })
+
         navView.menu.findItem(R.id.logout)
             .setOnMenuItemClickListener(object : MenuItem.OnMenuItemClickListener {
                 override fun onMenuItemClick(item: MenuItem?): Boolean {

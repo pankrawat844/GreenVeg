@@ -1,23 +1,25 @@
 package com.app.greenveg.ui.contactus
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.app.greenveg.R
+import com.app.greenveg.model.Contact
+import com.app.greenveg.utils.MyApi
+import com.app.greenveg.utils.toast
+import kotlinx.android.synthetic.main.fragment_contact_us.view.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ContactUsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ContactUsFragment : Fragment() {
+class ContactUsFragment : Fragment(), KodeinAware {
 
 
     override fun onCreateView(
@@ -25,26 +27,32 @@ class ContactUsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact_us, container, false)
+        val view = inflater.inflate(R.layout.fragment_contact_us, container, false)
+        view.progressBar.visibility = View.VISIBLE
+        MyApi().contact().enqueue(object : Callback<Contact> {
+            override fun onFailure(call: Call<Contact>, t: Throwable) {
+                view.progressBar.visibility = View.GONE
+                activity?.toast(t.message!!)
+            }
+
+            override fun onResponse(call: Call<Contact>, response: Response<Contact>) {
+                view.progressBar.visibility = View.GONE
+                view.email.text = response.body()?.data?.response?.email!!
+                view.phone.text = response.body()?.data?.response?.mobile!!
+            }
+
+        })
+        view.phone.setOnClickListener {
+            Intent(Intent.ACTION_DIAL).also {
+                it.data = Uri.parse("tel:" + view.phone.text.toString())
+                activity?.startActivity(it)
+            }
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ContactUsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContactUsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+    override val kodein by kodein()
+
+
 }

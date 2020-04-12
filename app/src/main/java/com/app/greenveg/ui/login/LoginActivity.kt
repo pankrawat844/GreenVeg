@@ -36,33 +36,37 @@ class LoginActivity : AppCompatActivity(), LoginListener, KodeinAware {
 
     override fun onSuccess(user: User) {
         progressBar.visibility = View.GONE
-        toast("Login Successfull. Now place order through basket.")
-        val sharedPreferences = getSharedPreferences("greenveg", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit {
-            putBoolean("islogin", true)
-            putString("userid", user.data.response.userid)
-            putString("name", user.data.response.name)
-            putString("username", user.data.response.userName)
-            putString("email", user.data.response.email)
-            putString("mobile", user.data.response.mobile)
-            putString("password", user.data.response.password)
-            putString("servicearea", user.data.response.serviceAvailArea)
-            putString("alternatemobile", user.data.response.alternatePhone)
-            putString("address1", user.data.response.addressLine1)
-            putString("address2", user.data.response.addressLine2)
-            putString("address3", user.data.response.addressLine3)
-            putString("address4", user.data.response.addressLine4)
-            putString("address5", user.data.response.addressLine5)
-            putString("landmark", user.data.response.landmark)
-            putString("pincode", user.data.response.pin)
-            putString("district", user.data.response.district)
-            putString("state", user.data.response.state)
-            commit()
-        }
+        if (user.data.response.userStatus == "1") {
+            toast("Login Successfull. Now place order through basket.")
+            val sharedPreferences = getSharedPreferences("greenveg", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit {
+                putBoolean("islogin", true)
+                putString("userid", user.data.response.userid)
+                putString("name", user.data.response.name)
+                putString("username", user.data.response.userName)
+                putString("email", user.data.response.email)
+                putString("mobile", user.data.response.mobile)
+                putString("password", user.data.response.password)
+                putString("servicearea", user.data.response.serviceAvailArea)
+                putString("alternatemobile", user.data.response.alternatePhone)
+                putString("address1", user.data.response.addressLine1)
+                putString("address2", user.data.response.addressLine2)
+                putString("address3", user.data.response.addressLine3)
+                putString("address4", user.data.response.addressLine4)
+                putString("address5", user.data.response.addressLine5)
+                putString("landmark", user.data.response.landmark)
+                putString("pincode", user.data.response.pin)
+                putString("district", user.data.response.district)
+                putString("state", user.data.response.state)
+                commit()
+            }
 
-        Intent(this, NavigationActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(it)
+            Intent(this, NavigationActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+        } else {
+            toast("Currently you are disabled. Please contact our support team.")
         }
     }
 

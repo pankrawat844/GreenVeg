@@ -26,8 +26,8 @@
             android:id="@+id/home"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
             android:src="@drawable/ic_baseline_home_24"
             android:tint="@color/green" />
 
@@ -114,7 +114,7 @@
         android:id="@+id/cart_recylerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/note"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 

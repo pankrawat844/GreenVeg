@@ -60,7 +60,7 @@ class ProfileFragment : Fragment(), KodeinAware, SignupListener {
             null
         }
         view?.username?.filters = arrayOf(filter)
-        view?.password?.filters = arrayOf(filter)
+        view?.password?.filters = arrayOf(filter, InputFilter.LengthFilter(10))
         sharedPreferences = activity?.getSharedPreferences("greenveg", Context.MODE_PRIVATE)
         viewModel.userId = sharedPreferences?.getString("userid", "")
         viewModel.name = sharedPreferences?.getString("name", "")

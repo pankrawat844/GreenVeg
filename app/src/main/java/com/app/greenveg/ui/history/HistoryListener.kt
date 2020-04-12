@@ -6,6 +6,7 @@ interface HistoryListener {
     fun onStarted()
     fun onSuccess(response: HistoryData)
     fun onSuccessDetail(response: HistoryDetailItem)
+    fun onSuccessDelivery(response: HistoryDetailItem)
     fun onSuccessCancel(response: Signup)
     fun onFailour(msg: String)
 

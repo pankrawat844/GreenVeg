@@ -1,7 +1,10 @@
 package com.app.greenveg.ui.signup
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
+import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -34,7 +37,9 @@ class SignupActivity : AppCompatActivity(), KodeinAware, SignupListener {
         databind?.data = viewmodel
         databind?.item = Item()
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
+
             for (i in start until end) {
+
                 if (Character.isWhitespace(source[i])) {
                     return@InputFilter ""
                 }
@@ -42,7 +47,22 @@ class SignupActivity : AppCompatActivity(), KodeinAware, SignupListener {
             null
         }
         username.filters = arrayOf(filter)
-        password.filters = arrayOf(filter)
+        password.filters = arrayOf(filter, LengthFilter(10))
+        password.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+
+            }
+        })
+
 //        viewmodel.servicearea=serviceAreaList?.get(databind?.item?.selectedItemPosition!!)
         service_area.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {

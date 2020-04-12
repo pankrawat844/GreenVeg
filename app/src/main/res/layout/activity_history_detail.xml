@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/cancelOrder"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
@@ -31,8 +32,8 @@
                 android:id="@+id/home"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
                 android:src="@drawable/ic_baseline_home_24"
                 android:tint="@color/green" />
 
@@ -99,6 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#F7F7F7"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -224,6 +226,18 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Order Details"
+                    android:textAllCaps="true"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:id="@+id/footer"
                     android:layout_width="match_parent"
@@ -291,192 +305,194 @@
                 </RelativeLayout>
 
 
-                <ScrollView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/rectangle"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/rectangle"
+                            android:orientation="vertical">
+
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="12dp"
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/address_line1"
+                                    android:id="@+id/productDetails"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="12dp" />
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:text="Product Details"
+                                    android:textAllCaps="true"
+                                    android:textSize="19sp"
+                                    android:textStyle="bold" />
 
-                                <TextView
-                                    android:id="@+id/address_line2"
-                                    android:layout_width="wrap_content"
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/detailRecylerview"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text=""
+                                    android:layout_marginLeft="14dp"
+                                    android:text="Class"
+                                    android:textColor="@color/subTextColor"
+                                    android:textSize="13.5dp" />
 
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:id="@+id/address_line3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:id="@+id/address_line4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:id="@+id/address_line5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/serviceArea"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:id="@+id/landmark"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:id="@+id/district"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:id="@+id/state"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-                                <TextView
-                                    android:id="@+id/pincode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text=""
-                                    android:textColor="@color/mainTextColor"
-                                    android:textSize="14dp" />
-
-
-                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.7dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="#cccdce"
+
+                        <TextView
+                            android:id="@+id/deliveryDetailtxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Delivery Details"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
                             android:visibility="gone" />
+
+                        <RelativeLayout
+                            android:id="@+id/footer_delivery"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toTopOf="@+id/next">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginLeft="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text="No Of Item:"
+                                    android:textColor="@color/mainTextColor"
+                                    android:textSize="14.5dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/noItem1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:fontFamily="@font/sfuitext_regular"
+                                    android:gravity="start"
+                                    android:text=""
+                                    android:textColor="@color/mainTextColor"
+                                    android:textSize="14.5dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp">
+
+                                <TextView
+                                    android:id="@+id/cart_txt1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Order Total: "
+                                    android:textColor="@color/mainTextColor"
+                                    android:textSize="14.5dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/orderTotal1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text=""
+                                    android:textColor="@color/mainTextColor"
+                                    android:textSize="14.5dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </RelativeLayout>
 
 
                         <LinearLayout
+                            android:id="@+id/recyelrviewLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
+                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginRight="12dp"
-                            android:orientation="vertical">
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/rectangle"
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-                            <TextView
-                                android:id="@+id/productDetails"
-                                android:layout_width="wrap_content"
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/roboto_medium"
-                                android:text="Product Details"
-                                android:textAllCaps="true"
-                                android:textSize="19sp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="12dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/productDetails1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:text="Product Details"
+                                    android:textAllCaps="true"
+                                    android:textSize="19sp"
                                 android:textStyle="bold" />
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/detailRecylerview"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="14dp"
-                                android:text="Class"
-                                android:textColor="@color/subTextColor"
-                                android:textSize="13.5dp" />
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/detailRecylerview1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="14dp"
+                                    android:text="Class"
+                                    android:textColor="@color/subTextColor"
+                                    android:textSize="13.5dp" />
 
-                            <TextView
-                                android:id="@+id/spinner2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"></TextView>
+
+                            </LinearLayout>
 
 
                         </LinearLayout>
 
-
                     </LinearLayout>
-                </ScrollView>
+                </androidx.core.widget.NestedScrollView>
+
 
             </LinearLayout>
+
 
         </LinearLayout>
 
@@ -491,6 +507,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/rect3"
         android:gravity="center"
+        android:visibility="gone"
         android:padding="10dp"
         android:text="Cancel Order"
         android:textColor="#fff"

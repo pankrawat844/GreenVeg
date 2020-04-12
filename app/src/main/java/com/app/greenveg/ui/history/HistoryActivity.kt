@@ -97,6 +97,10 @@ class HistoryActivity : Fragment(), KodeinAware, HistoryListener {
 
     }
 
+    override fun onSuccessDelivery(response: HistoryDetailItem) {
+
+    }
+
     override fun onSuccessCancel(response: Signup) {
 
     }

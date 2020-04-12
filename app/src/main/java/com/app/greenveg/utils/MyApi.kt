@@ -18,7 +18,7 @@ companion object
         val gson = GsonBuilder().setLenient().create()
 
         return Retrofit.Builder()
-            .baseUrl("https://schmanagement.000webhostapp.com/greenveg/api/")
+                .baseUrl("http://thegreenveg.co.in/admin_panel/api/")
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -117,19 +117,28 @@ companion object
     @FormUrlEncoded
     @POST("history_api.php")
     fun history(
-        @Field("userid") userid: String?
+            @Field("userid") userid: String?
     ): Call<HistoryData>
 
     @FormUrlEncoded
     @POST("orderdetail_api.php")
     fun historyDetail(
-        @Field("orderid") userid: String?
+            @Field("orderid") userid: String?
+    ): Call<HistoryDetailItem>
+
+    @FormUrlEncoded
+    @POST("deliverydetail_api.php")
+    fun deliveryDetail(
+            @Field("orderid") userid: String?
     ): Call<HistoryDetailItem>
 
     @FormUrlEncoded
     @POST("order_cancel_api.php")
     fun cancelOrder(
-        @Field("orderid") userid: String?
+            @Field("orderid") userid: String?
     ): Call<Signup>
+
+    @GET("contact_api.php")
+    fun contact(): Call<Contact>
 
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.greenveg.R
+import com.app.greenveg.db.ProductEntity
 import com.app.greenveg.model.ProductList
 import com.app.greenveg.utils.toast
 import kotlinx.android.synthetic.main.product_list_fragment.*
@@ -19,16 +20,19 @@ import org.kodein.di.generic.instance
 class ProductListFragment : Fragment(),
     ProductLisetner,KodeinAware {
     val factory: ProductListModelFactory by instance()
+
+    var productAllList: ArrayList<ProductEntity>? = ArrayList()
+
     companion object {
         fun newInstance() =
-            ProductListFragment()
+                ProductListFragment()
     }
 
     private lateinit var viewModel: ProductListViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.product_list_fragment, container, false)
     }
@@ -48,7 +52,11 @@ class ProductListFragment : Fragment(),
     override fun onSuccess(productList: ProductList) {
         Log.e("response", productList.toString())
         product_recylerview?.layoutManager = LinearLayoutManager(activity)
-        product_recylerview?.adapter = ProductAdapter(activity!!, productList.response!!)
+        for (entity in productList.response!!) {
+            if (entity.status.equals("1"))
+                productAllList?.add(entity)
+        }
+        product_recylerview?.adapter = ProductAdapter(activity!!, productAllList!!)
     }
 
     override fun onFailure(msg: String) {

@@ -121,7 +121,7 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
             val mcurrentDate1: Calendar = Calendar.getInstance()
             val mindate: Calendar = Calendar.getInstance()
             mindate.add(Calendar.DAY_OF_MONTH, 1)
-            mcurrentDate1.add(Calendar.DAY_OF_MONTH, 5)
+            mcurrentDate1.add(Calendar.DAY_OF_MONTH, 3)
             mDatePicker.datePicker.minDate = mindate.timeInMillis
             mDatePicker.datePicker.maxDate = mcurrentDate1.timeInMillis
             mDatePicker.show()
@@ -131,102 +131,119 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
         }
 
         next.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
+            if (cart_total.text.toString().toFloat() >= 100) {
+                CoroutineScope(Dispatchers.IO).launch {
 
-                var itemTotal: Int? =
-                    AppDatabase(this@CartActivity).cartDao().getCartProduct().size
-                var items =
-                    AppDatabase(this@CartActivity).cartDao().getCartProduct()
+                    var itemTotal: Int? =
+                            AppDatabase(this@CartActivity).cartDao().getCartProduct().size
+                    var items =
+                            AppDatabase(this@CartActivity).cartDao().getCartProduct()
 
-                if (itemTotal!! > 0) {
-                    withContext(Dispatchers.Main) {
-                        val alartDialog = AlertDialog.Builder(this@CartActivity)
-                        alartDialog.setTitle("Confirm Order")
-                        alartDialog.setMessage("Are You Sure To Confirm This Order.")
-                        alartDialog.setPositiveButton(
-                            "Yes"
-                        ) { dialog, which ->
-                            val sharedPef = getSharedPreferences("greenveg", Context.MODE_PRIVATE)
-                            if (!sharedPef.getBoolean("islogin", false)) {
-                                Intent(this@CartActivity, LoginActivity::class.java).also {
-                                    startActivity(it)
-                                }
-                                dialog.dismiss()
-                            } else {
+                    if (itemTotal!! > 0) {
+                        withContext(Dispatchers.Main) {
+                            val alartDialog = AlertDialog.Builder(this@CartActivity)
+                            alartDialog.setTitle("Confirm Order")
+                            alartDialog.setMessage("Are You Sure To Confirm This Order.")
+                            alartDialog.setPositiveButton(
+                                    "Yes"
+                            ) { dialog, which ->
+                                val sharedPef =
+                                        getSharedPreferences("greenveg", Context.MODE_PRIVATE)
+                                if (!sharedPef.getBoolean("islogin", false)) {
+                                    Intent(this@CartActivity, LoginActivity::class.java).also {
+                                        startActivity(it)
+                                    }
+                                    dialog.dismiss()
+                                } else {
 
-                                val delivery_date_txt = delivery_date.text.toString()
-                                val simpledate1 = SimpleDateFormat("dd/MM/yyyy")
-                                val simpledate2 = SimpleDateFormat("MM/dd/yyyy")
-                                val convert_date = simpledate1.parse(delivery_date_txt)
+                                    val delivery_date_txt = delivery_date.text.toString()
+                                    val simpledate1 = SimpleDateFormat("dd/MM/yyyy")
+                                    val simpledate2 = SimpleDateFormat("MM/dd/yyyy")
+                                    val convert_date = simpledate1.parse(delivery_date_txt)
 
-                                val array = JSONArray()
-                                for (item in items) {
-                                    val product_total = item.sellingPrice?.toInt()
-                                        ?.times(item.selected_quantity.toFloat())!!
-                                    val jsonObject = JSONObject()
-                                    jsonObject.put(
-                                        "user_id", getSharedPreferences(
-                                            "greenveg",
-                                            Context.MODE_PRIVATE
+                                    val array = JSONArray()
+                                    for (item in items) {
+                                        val product_total = item.sellingPrice?.toInt()
+                                                ?.times(item.selected_quantity.toFloat())!!
+                                        val jsonObject = JSONObject()
+                                        jsonObject.put(
+                                                "user_id", getSharedPreferences(
+                                                "greenveg",
+                                                Context.MODE_PRIVATE
                                         ).getString("userid", "")
-                                    )
-                                    jsonObject.put(
-                                        "username", getSharedPreferences(
-                                            "greenveg",
-                                            Context.MODE_PRIVATE
-                                        ).getString("name", "")
-                                    )
-                                    getSharedPreferences(
-                                        "greenveg",
-                                        Context.MODE_PRIVATE
-                                    ).getString("name", "")
-                                    jsonObject.put(
-                                        "delivery_date",
-                                        simpledate2.format(convert_date!!)
-                                    )
-                                    jsonObject.put("product_id", item.productId)
-                                    jsonObject.put("product_name", item.productName)
-                                    jsonObject.put(
-                                        "product_quantity",
-                                        item.selected_quantity.toString()
-                                    )
-                                    jsonObject.put("product_unit_rate", item.sellingPrice)
-                                    jsonObject.put("product_price", item.sellingPrice)
-                                    jsonObject.put("product_total", product_total.toString())
-                                    jsonObject.put("order_total", total.toString())
-                                    jsonObject.put("unit_of_measure", item.unitOfMeasure)
-                                    val telephonyManager = Settings.Secure.getString(
-                                        contentResolver,
-                                        Settings.Secure.ANDROID_ID
-                                    )
+                                        )
+                                        jsonObject.put(
+                                                "username", getSharedPreferences(
+                                                "greenveg",
+                                                Context.MODE_PRIVATE
+                                        ).getString("username", "")
+                                        )
+                                        jsonObject.put(
+                                                "name",
+                                                getSharedPreferences(
+                                                        "greenveg",
+                                                        Context.MODE_PRIVATE
+                                                ).getString("name", "")
+                                        )
+                                        jsonObject.put(
+                                                "delivery_date",
+                                                simpledate2.format(convert_date!!)
+                                        )
+                                        jsonObject.put("product_id", item.productId)
+                                        jsonObject.put("product_name", item.productName)
+                                        jsonObject.put(
+                                                "product_quantity",
+                                                item.selected_quantity.toString()
+                                        )
+                                        jsonObject.put("product_unit_rate", item.sellingPrice)
+                                        jsonObject.put("product_price", item.sellingPrice)
+                                        jsonObject.put("product_total", product_total.toString())
+                                        jsonObject.put("order_total", total.toString())
+                                        jsonObject.put("unit_of_measure", item.unitOfMeasure)
+                                        val telephonyManager = Settings.Secure.getString(
+                                                contentResolver,
+                                                Settings.Secure.ANDROID_ID
+                                        )
 
-                                    jsonObject.put("device_id", telephonyManager)
-                                    array.put(jsonObject)
-                                }
+                                        jsonObject.put("device_id", telephonyManager)
+                                        array.put(jsonObject)
+                                    }
 
 //                                Intent(this@CartActivity, LoginActivity::class.java).also {
 //                                    startActivity(it)
 //                                }
-                                viewmodel?.getCart(array)
+                                    viewmodel?.getCart(array)
+                                    dialog.dismiss()
+                                }
+                            }
+
+                            alartDialog.setNegativeButton(
+                                    "No"
+                            ) { dialog, which ->
                                 dialog.dismiss()
                             }
-                        }
 
-                        alartDialog.setNegativeButton(
-                            "No"
-                        ) { dialog, which ->
-                            dialog.dismiss()
+                            alartDialog.create().show()
                         }
-
-                        alartDialog.create().show()
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        toast("Please add a item to basket for order.")
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            toast("Please add a item to basket for order.")
+                        }
                     }
                 }
-            }
+            } else {
+                val alartDialog = AlertDialog.Builder(this@CartActivity)
+                alartDialog.setTitle("Confirm Order")
+                alartDialog.setMessage("Please make sure that, your order total value is equal or greater than Rs 100.")
 
+                alartDialog.setNegativeButton(
+                        "OK"
+                ) { dialog, which ->
+                    dialog.dismiss()
+                }
+
+                alartDialog.create().show()
+            }
 
         }
     }
@@ -263,6 +280,7 @@ class CartActivity : AppCompatActivity(), CartListener, KodeinAware {
 
                             cart_recylerview.layoutManager = LinearLayoutManager(this@CartActivity)
                             cart_recylerview.adapter = CartAdapter(this@CartActivity, cart)
+                            cart_recylerview.scrollToPosition(intent.getIntExtra("position", 0) + 1)
 //                            adapter?.notifyDataSetChanged()
                         }
                     }

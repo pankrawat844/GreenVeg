@@ -80,7 +80,7 @@ class HomeFragment : Fragment(), HomeListener, KodeinAware {
 
 
     override fun onStarted() {
-        mainProgress.visibility = View.VISIBLE
+        mainProgress?.visibility = View.VISIBLE
     }
 
     override fun onSuccess(response: List<Category.Response>) {
@@ -101,7 +101,7 @@ class HomeFragment : Fragment(), HomeListener, KodeinAware {
     }
 
     override fun onFailour(msg: String) {
-        mainProgress.visibility = View.GONE
+        mainProgress?.visibility = View.GONE
         if (msg.contains("Unable to resolve host")) {
             activity?.toast("Please check your internet connection. Try again. ")
         } else
